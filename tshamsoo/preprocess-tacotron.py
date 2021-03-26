@@ -62,7 +62,7 @@ def khehue(path: Union[str, Path], wav_files):
 
     gigian = os.environ['GIGIAN']
     for csv_file in sorted(csv_files):
-        if gigian in csv_file:
+        if gigian in csv_file.name:
             with open(csv_file, encoding='utf-8') as f:
                 for tsua in DictReader(f):
                     mia = basename(tsua['客語音檔'])
