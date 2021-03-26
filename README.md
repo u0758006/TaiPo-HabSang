@@ -10,7 +10,31 @@
 ## 步
 1. 先用`time dobi liah-giliau`，會掠客語能力認證，掠好會生做按呢
 ```
-...
+Elearning-202102/
+├── csv_imtong
+│   ├── da3-1.csv
+│   ├── da3-2.csv
+│   ├── daw.csv
+│   ├── ha3-1.csv
+│   ├── ha3-2.csv
+│   ├── haw.csv
+│   ├── rh3-1.csv
+│   ├── rh3-2.csv
+│   ├── rhw.csv
+│   ├── si3-1.csv
+│   ├── si3-2.csv
+│   ├── siw.csv
+│   ├── zh3-1.csv
+│   ├── zh3-2.csv
+│   └── zhw.csv
+└── mp3
+    ├── 1da-01-001.mp3
+    ├── 1da-01-001s.mp3
+    ├── 1da-01-002.mp3
+    ├── 1da-01-002s.mp3
+    ├── ...
+    ├── zh-18-157.mp3
+    └── zh-18-157s.mp3
 ```
 2. `time dobi giliau-pianma`，wave downsample 閣降做 16bits，上尾合成較緊
 3. `time dobi preprocess-tacotron`，準備tactorn格式。
