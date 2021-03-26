@@ -88,10 +88,12 @@ job=giliau-pianma-job:
   command: |
     bash -eux -c '
       apt-get update
-      apt-get install -y sox
-      cp *csv /giliau/
-      find . -type d -exec mkdir -p /giliau/{} \;
-      find . -name "*wav" -exec sox {} -b 16 -c 1 -r $PINLUT /giliau/{} \;
+      apt-get install -y ffmpeg
+      cp -r csv_imtong /giliau/
+      mkdir -p /giliau/mp3
+      find . -name "*mp3" -exec ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar 16000 /giliau/{}.wav \;
+      find . -type f
+      find . -type f -empty -delete
     '
   mounts: [punte_giliau, giliau, ]
   working-dir: /punte_giliau
