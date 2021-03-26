@@ -8,20 +8,8 @@
 - 設定docker權限`sudo usermod -aG docker $USER`
 
 ## 步
-1. 先用`time dobi liah-giliau`，會掠 [SuiSiann-Dataset](https://suisiann-dataset.ithuan.tw/)，掠好會生做按呢
+1. 先用`time dobi liah-giliau`，會掠客語能力認證，掠好會生做按呢
 ```
-.
-├── 0.2
-│   ├── ImTong
-│   │   ├── SuiSiann_0001.wav
-│   │   ├── SuiSiann_0002.wav
-│   │   ├── SuiSiann_0003.wav
-│   │   ├── SuiSiann_0004.wav
-│   │   ├── SuiSiann_0005.wav
-│   │    ...
-│   └── SuiSiann.csv
-├── dobi.yaml
-├── Dockerfile
 ...
 ```
 2. `time dobi giliau-pianma`，wave downsample 閣降做 16bits，上尾合成較緊

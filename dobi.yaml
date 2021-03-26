@@ -4,16 +4,16 @@
 #
 
 meta:
-  project: SuiSiann-WaveRNN
+  project: KhehUe-WaveRNN
 
 env=siatting:
   variables:
-  - PANPUN=0.2.1
-  - BANGTSI=https://www.dropbox.com/s/rye2sd0wo718bj5/SuiSiann-0.2.1.tar?dl=0
+  - PANPUN=Elearning-202102
+  - BANGTSI=https://www.dropbox.com/s/6643qa843bb6tjf/Elearning-Hakka-202102.tar?dl=0
   - PINLUT=16k
 
 alias=liah-giliau:
-  tasks: [siatting, liah-giliau-job, sua-tshutlai]
+  tasks: [siatting, liah-giliau-job]
 
 alias=giliau-pianma:
   tasks: [siatting, giliau-pianma-job]
@@ -76,17 +76,6 @@ job=liah-giliau-job:
       apt-get update
       apt-get install -y wget
       wget -O - $BANGTSI | tar -xvf - -C /punte_giliau
-    '
-  mounts: [punte_giliau, ]
-
-job=sua-tshutlai:
-  use: ubuntu
-  env:
-  - PANPUN={env.PANPUN}
-  command: |
-    bash -eux -c '
-      mv /punte_giliau/$PANPUN/* /punte_giliau
-      rmdir /punte_giliau/$PANPUN
     '
   mounts: [punte_giliau, ]
 
