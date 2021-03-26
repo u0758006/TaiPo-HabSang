@@ -1,6 +1,6 @@
 import argparse
 from csv import DictReader
-import glob
+import os
 from multiprocessing import Pool, cpu_count
 from os.path import splitext, basename
 from pathlib import Path
@@ -12,12 +12,6 @@ from utils.display import *
 from utils.dsp import *
 from utils.files import get_files
 from utils.paths import Paths
-
-
-from 臺灣言語工具.解析整理.拆文分析器 import 拆文分析器
-from 臺灣言語工具.音標系統.閩南語.臺灣閩南語羅馬字拼音 import 臺灣閩南語羅馬字拼音
-from 臺灣言語工具.語音合成.閩南語音韻規則 import 閩南語音韻規則
-from 臺灣言語工具.語音合成 import 台灣話口語講法
 
 
 # Helper functions for argument types
@@ -58,26 +52,26 @@ extension = args.extension
 path = args.path
 
 
-def suisiann(path: Union[str, Path], wav_files):
-    csv_file = get_files(path, extension='.csv')
-
-    assert len(csv_file) == 1
+def khehue(path: Union[str, Path], wav_files):
+    csv_files = get_files(path, extension='.csv')
 
     u_tihleh = set()
     for sootsai in wav_files:
         u_tihleh.add(basename(sootsai))
     text_dict = {}
 
-    with open(csv_file[0], encoding='utf-8') as f:
-        for tsua in DictReader(f):
-            mia = basename(tsua['音檔'])
-            if mia in u_tihleh:
-                imtong = splitext(mia)[0]
-                hj = tsua['漢字']
-                lmj = tsua['羅馬字']
-                text_dict[imtong] = 台灣話口語講法(
-                    拆文分析器.建立句物件(hj, lmj)
-                )
+    gigian = os.environ['GIGIAN']
+    for csv_file in sorted(csv_files):
+        if gigian in csv_file:
+            with open(csv_file, encoding='utf-8') as f:
+                for tsua in DictReader(f):
+                    mia = basename(tsua['客語音檔'])
+                    if mia in u_tihleh:
+                        imtong = splitext(mia)[0]
+                        hj = tsua['客家語']
+                        lmj = tsua['客語標音']
+                        if '（' not in hj and '【' not in hj:
+                            text_dict[imtong] = lmj
 
     return text_dict
 
@@ -119,7 +113,7 @@ else:
 
     if not hp.ignore_tts:
 
-        text_dict = suisiann(path, wav_files)
+        text_dict = khehue(path, wav_files)
 
         with open(paths.data / 'text_dict.pkl', 'wb') as f:
             pickle.dump(text_dict, f)
