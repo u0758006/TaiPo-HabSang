@@ -9,6 +9,7 @@ meta:
 env=siatting:
   variables:
   - PANPUN=Elearning-202102
+  - GIGIAN=si
   - BANGTSI=https://www.dropbox.com/s/6643qa843bb6tjf/Elearning-Hakka-202102.tar?dl=0
   - PINLUT=16k
 
@@ -50,15 +51,15 @@ mount=tshamsoo:
   read-only: true
 
 mount=data:
-  bind: ./{env.PANPUN}-data/
+  bind: ./{env.PANPUN}-{env.GIGIAN}-data/
   path: /data/
 
 mount=outputs:
-  bind: ./{env.PANPUN}-model_outputs/
+  bind: ./{env.PANPUN}-{env.GIGIAN}-model_outputs/
   path: /WaveRNN/model_outputs/
 
 mount=checkpoints:
-  bind: ./{env.PANPUN}-checkpoints/
+  bind: ./{env.PANPUN}-{env.GIGIAN}-checkpoints/
   path: /WaveRNN/checkpoints/
 
 image=ubuntu:
@@ -103,6 +104,7 @@ job=preprocess-tacotron-job:
   use: hunlian-khuanking
   env:
   - PANPUN={env.PANPUN}
+  - GIGIAN={env.GIGIAN}
   command: |
     bash -eux -c '
       cp /tshamsoo/hparams.py .
@@ -117,6 +119,7 @@ job=tacotron-job:
   use: hunlian-khuanking
   env:
   - PANPUN={env.PANPUN}
+  - GIGIAN={env.GIGIAN}
   - CUDA_VISIBLE_DEVICES=0
   command: |
     bash -eux -c '
@@ -131,6 +134,7 @@ job=tacotron-gta-job:
   use: hunlian-khuanking
   env:
   - PANPUN={env.PANPUN}
+  - GIGIAN={env.GIGIAN}
   - CUDA_VISIBLE_DEVICES=0
   command: |
     bash -eux -c '
@@ -145,6 +149,7 @@ job=preprocess-wavernn-job:
   use: hunlian-khuanking
   env:
   - PANPUN={env.PANPUN}
+  - GIGIAN={env.GIGIAN}
   command: |
     bash -eux -c '
       cp /tshamsoo/hparams.py .
@@ -157,6 +162,7 @@ job=wavernn-job:
   use: hunlian-khuanking
   env:
   - PANPUN={env.PANPUN}
+  - GIGIAN={env.GIGIAN}
   - CUDA_VISIBLE_DEVICES=0
   command: |
     bash -eux -c '
@@ -172,6 +178,7 @@ job=huatsiann-job:
   use: hunlian-khuanking
   env:
   - PANPUN={env.PANPUN}
+  - GIGIAN={env.GIGIAN}
   - CUDA_VISIBLE_DEVICES=1
   command: |
     bash -eux -c '
