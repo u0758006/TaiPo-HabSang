@@ -8,6 +8,4 @@ WORKDIR /WaveRNN
 
 ENV LANG C.UTF-8
 RUN pip install -r requirements.txt
-RUN pip install https://github.com/i3thuan5/tai5-uan5_gian5-gi2_kang1-ku7/archive/master.zip
 RUN pip install --upgrade librosa
-RUN git pull # 20191125
