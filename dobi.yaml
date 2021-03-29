@@ -88,12 +88,12 @@ job=tsuan-pianma-job:
   command: |
     bash -eux -c '
       apt-get update
-      apt-get install -y ffmpeg
+      apt-get install -y ffmpeg sox
       cp -r csv_imtong /giliau/
-      mkdir -p /giliau/mp3
-      find . -name "*mp3" -exec ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar 16000 /giliau/{}.wav \;
-      find . -type f
-      find . -type f -empty -delete
+      mkdir -p /giliau/mp3 /tsiamsi/mp3
+      find . -name "*.mp3" -exec ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar 16000 /tsiamsi/{}.wav \;
+      find /tsiamsi/ -type f -empty -delete
+      find . -name "*.mp3" -exec sox /tsiamsi/{}.wav /giliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse \;
     '
   mounts: [punte_giliau, giliau, ]
   working-dir: /punte_giliau
