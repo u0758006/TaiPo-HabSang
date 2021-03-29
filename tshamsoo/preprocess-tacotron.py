@@ -56,10 +56,12 @@ def khehue(path: Union[str, Path], wav_files):
     csv_files = get_files(path, extension='.csv')
 
     u_tihleh = set()
-    for sootsai in wav_files:
-        u_tihleh.add(basename(sootsai))
-    text_dict = {}
+    for wav_sootsai in wav_files:
+        mia = basename(wav_sootsai)
+        if mia.endswith('.wav'):
+            u_tihleh.add(mia[:-4])
 
+    text_dict = {}
     gigian = os.environ['GIGIAN']
     for csv_file in sorted(csv_files):
         if gigian in csv_file.name:
@@ -67,11 +69,10 @@ def khehue(path: Union[str, Path], wav_files):
                 for tsua in DictReader(f):
                     mia = basename(tsua['客語音檔'])
                     if mia in u_tihleh:
-                        imtong = splitext(mia)[0]
                         hj = tsua['客家語']
                         lmj = tsua['客語標音']
                         if '（' not in hj and '【' not in hj:
-                            text_dict[imtong] = lmj
+                            text_dict[mia] = lmj
 
     return text_dict
 
@@ -130,7 +131,7 @@ else:
 
     aie = []
     for tong in wav_files:
-        if tong in text_dict:
+        if tong.stem in text_dict:
             aie.append(tong)
 
     pool = Pool(processes=n_workers)
@@ -138,8 +139,8 @@ else:
 
     for i, (item_id, length) in enumerate(pool.imap_unordered(process_wav, aie), 1):
         dataset += [(item_id, length)]
-        bar = progbar(i, len(wav_files))
-        message = f'{bar} {i}/{len(wav_files)} '
+        bar = progbar(i, len(aie))
+        message = f'{bar} {i}/{len(aie)} '
         stream(message)
 
     with open(paths.data / 'dataset.pkl', 'wb') as f:
