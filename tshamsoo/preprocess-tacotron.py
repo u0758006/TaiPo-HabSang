@@ -128,10 +128,15 @@ else:
         ('CPU Usage', f'{n_workers}/{cpu_count()}')
     ])
 
+    aie = []
+    for tong in wav_files:
+        if tong in text_dict:
+            aie.append(tong)
+
     pool = Pool(processes=n_workers)
     dataset = []
 
-    for i, (item_id, length) in enumerate(pool.imap_unordered(process_wav, wav_files), 1):
+    for i, (item_id, length) in enumerate(pool.imap_unordered(process_wav, aie), 1):
         dataset += [(item_id, length)]
         bar = progbar(i, len(wav_files))
         message = f'{bar} {i}/{len(wav_files)} '
