@@ -53,6 +53,19 @@ path = args.path
 
 
 def khehue(path: Union[str, Path], wav_files):
+    text_dict = {}
+    for hj, lmj, mia in tshue_khehue(path, wav_files):
+        if (
+            '（' not in hj and '(' not in hj and '【' not in hj
+            and '（' not in lmj and '(' not in lmj
+            and '【' not in lmj and '/' not in lmj
+        ):
+            text_dict[mia] = lmj.replace('\xa0', '')
+
+    return text_dict
+
+
+def tshue_khehue(path: Union[str, Path], wav_files):
     csv_files = get_files(path, extension='.csv')
 
     u_tihleh = set()
@@ -61,7 +74,6 @@ def khehue(path: Union[str, Path], wav_files):
         if mia.endswith('.wav'):
             u_tihleh.add(mia[:-4])
 
-    text_dict = {}
     gigian = os.environ['GIGIAN']
     for csv_file in sorted(csv_files):
         if gigian in csv_file.name:
@@ -71,14 +83,7 @@ def khehue(path: Union[str, Path], wav_files):
                     if mia in u_tihleh:
                         hj = tsua['客家語']
                         lmj = tsua['客語標音']
-                        if (
-                            '（' not in hj and '(' not in hj and '【' not in hj
-                            and '（' not in lmj and '(' not in lmj
-                            and '【' not in lmj and '/' not in lmj
-                        ):
-                            text_dict[mia] = lmj.replace('\xa0', '')
-
-    return text_dict
+                        yield hj, lmj, mia
 
 
 def convert_file(path: Path):
