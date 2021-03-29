@@ -2,7 +2,7 @@ import argparse
 from csv import DictReader
 import os
 from multiprocessing import Pool, cpu_count
-from os.path import splitext, basename
+from os.path import basename
 from pathlib import Path
 import pickle
 from typing import Union
@@ -76,7 +76,7 @@ def khehue(path: Union[str, Path], wav_files):
                             and '（' not in lmj and '(' not in lmj
                             and '【' not in lmj and '/' not in lmj
                         ):
-                            text_dict[mia] = lmj.replace('\xa0','')
+                            text_dict[mia] = lmj.replace('\xa0', '')
 
     return text_dict
 
