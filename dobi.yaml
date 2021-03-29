@@ -42,7 +42,7 @@ mount=punte_giliau:
   path: /punte_giliau/
 
 mount=giliau:
-  bind: ./{env.PANPUN}-16k/
+  bind: ./{env.PANPUN}-{env.GIGIAN}-{env.PINLUT}/
   path: /giliau/
 
 mount=tshamsoo:
@@ -84,6 +84,7 @@ job=tsuan-pianma-job:
   use: ubuntu
   env:
   - PANPUN={env.PANPUN}
+  - GIGIAN={env.GIGIAN}
   - PINLUT={env.PINLUT}
   command: |
     bash -eux -c '
@@ -91,9 +92,9 @@ job=tsuan-pianma-job:
       apt-get install -y ffmpeg sox
       cp -r csv_imtong /giliau/
       mkdir -p /giliau/mp3 /tsiamsi/mp3
-      find . -name "*.mp3" -exec ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar 16000 /tsiamsi/{}.wav \;
+      find . -name "*${GIGIAN}*.mp3" -exec ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar 16000 /tsiamsi/{}.wav \;
       find /tsiamsi/ -type f -empty -delete
-      find . -name "*.mp3" -exec sox /tsiamsi/{}.wav /giliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse \;
+      find . -name "*${GIGIAN}*.mp3" -exec sox /tsiamsi/{}.wav /giliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse \;
     '
   mounts: [punte_giliau, giliau, ]
   working-dir: /punte_giliau
@@ -107,6 +108,7 @@ job=preprocess-tacotron-job:
   env:
   - PANPUN={env.PANPUN}
   - GIGIAN={env.GIGIAN}
+  - PINLUT={env.PINLUT}
   command: |
     bash -eux -c '
       cp /tshamsoo/hparams.py .
