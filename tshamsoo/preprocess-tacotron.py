@@ -71,8 +71,12 @@ def khehue(path: Union[str, Path], wav_files):
                     if mia in u_tihleh:
                         hj = tsua['客家語']
                         lmj = tsua['客語標音']
-                        if '（' not in hj and '(' not in hj and '【' not in hj:
-                            text_dict[mia] = lmj
+                        if (
+                            '（' not in hj and '(' not in hj and '【' not in hj
+                            and '（' not in lmj and '(' not in lmj
+                            and '【' not in lmj and '/' not in lmj
+                        ):
+                            text_dict[mia] = lmj.replace('\xa0','')
 
     return text_dict
 
