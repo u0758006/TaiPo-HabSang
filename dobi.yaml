@@ -8,7 +8,7 @@ meta:
 
 env=sadtin:
   variables:
-  - BANBUN=CiiDien-20190516
+  - BANBUN=ciidien-20190516
   - KIONG=si
   - MIONGZII=https://www.dropbox.com/s/gs6gk8zuehxbqti/moe-hakka-sound.tar?dl=0
   - PIN=16k
@@ -38,7 +38,7 @@ alias=hazoi-ngiliau:
 #   tasks: [siatting, huatsiann-job, ]
 
 mount=pun_ngiliau:
-  bind: ./{env.BANBUN}
+  bind: ./1-{env.BANBUN}/
   path: /pun_ngiliau/
 
 mount=ngiliau:

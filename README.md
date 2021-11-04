@@ -10,31 +10,25 @@
 ## 步
 1. 先用`time dobi hazoi-ngiliau`，會下載客語能力認證，下載好會恁樣
 ```
-Elearning-202102/
-├── csv_imtong
-│   ├── da3-1.csv
-│   ├── da3-2.csv
-│   ├── daw.csv
-│   ├── ha3-1.csv
-│   ├── ha3-2.csv
-│   ├── haw.csv
-│   ├── rh3-1.csv
-│   ├── rh3-2.csv
-│   ├── rhw.csv
-│   ├── si3-1.csv
-│   ├── si3-2.csv
-│   ├── siw.csv
-│   ├── zh3-1.csv
-│   ├── zh3-2.csv
-│   └── zhw.csv
-└── mp3
-    ├── 1da-01-001.mp3
-    ├── 1da-01-001s.mp3
-    ├── 1da-01-002.mp3
-    ├── 1da-01-002s.mp3
-    ├── ...
-    ├── zh-18-157.mp3
-    └── zh-18-157s.mp3
+1-ciidien-20190516/
+└── corpus
+    ├── s_sound
+    │   ├── 00001.mp3
+    │   ├── 00002.mp3
+    │   ├── ...
+    │   └── 15486.mp3
+    ├── s_sound2
+    │   └── ...
+    ├── s_sound3
+    │   └── ...
+    ├── s_sound4
+    │   └── ...
+    ├── s_sound5
+    │   └── ...
+    └── s_sound6
+         └── ...
+```
+
 ```
 2. `time dobi tsuan-pianma`，tok頭尾無聲ê部份，tacotron較會收斂，而且wave downsample 閣降做 16bits wav，上尾合成較緊
 3. `time dobi preprocess-tacotron`，準備tactorn格式。
