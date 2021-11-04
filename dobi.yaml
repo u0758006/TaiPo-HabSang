@@ -4,200 +4,200 @@
 #
 
 meta:
-  project: KhehUe-WaveRNN
+  project: HagFa-WaveRNN
 
-env=siatting:
+env=sadtin:
   variables:
-  - PANPUN=Elearning-202102
-  - GIGIAN=si
-  - BANGTSI=https://www.dropbox.com/s/6643qa843bb6tjf/Elearning-Hakka-202102.tar?dl=0
-  - PINLUT=16k
+  - BANBUN=CiiDien-20190516
+  - KIONG=si
+  - MIONGZII=https://www.dropbox.com/s/gs6gk8zuehxbqti/moe-hakka-sound.tar?dl=0
+  - PIN=16k
 
-alias=liah-giliau:
-  tasks: [siatting, liah-giliau-job]
+alias=hazoi-ngiliau:
+  tasks: [sadtin, hazoi-ngiliau-job]
 
-alias=tsuan-pianma:
-  tasks: [siatting, tsuan-pianma-job]
+# alias=tsuan-pianma:
+#   tasks: [siatting, tsuan-pianma-job]
 
-alias=preprocess-tacotron:
-  tasks: [siatting, preprocess-tacotron-job, ]
+# alias=preprocess-tacotron:
+#   tasks: [siatting, preprocess-tacotron-job, ]
 
-alias=tacotron:
-  tasks: [siatting, tacotron-job, ]
+# alias=tacotron:
+#   tasks: [siatting, tacotron-job, ]
 
-alias=tacotron-gta:
-  tasks: [siatting, tacotron-gta-job, ]
+# alias=tacotron-gta:
+#   tasks: [siatting, tacotron-gta-job, ]
 
-alias=preprocess-wavernn:
-  tasks: [siatting, preprocess-wavernn-job, ]
+# alias=preprocess-wavernn:
+#   tasks: [siatting, preprocess-wavernn-job, ]
 
-alias=wavernn:
-  tasks: [siatting, wavernn-job, ]
+# alias=wavernn:
+#   tasks: [siatting, wavernn-job, ]
 
-alias=huatsiann:
-  tasks: [siatting, huatsiann-job, ]
+# alias=huatsiann:
+#   tasks: [siatting, huatsiann-job, ]
 
-mount=punte_giliau:
-  bind: ./{env.PANPUN}
-  path: /punte_giliau/
+mount=pun_ngiliau:
+  bind: ./{env.BANBUN}
+  path: /pun_ngiliau/
 
-mount=giliau:
-  bind: ./{env.PANPUN}-{env.GIGIAN}-{env.PINLUT}/
-  path: /giliau/
+mount=ngiliau:
+  bind: ./{env.BANBUN}-{env.NGINGIEN}-{env.PIN}/
+  path: /zon_giliau/
 
-mount=tshamsoo:
-  bind: ./tshamsoo/
-  path: /tshamsoo/
-  read-only: true
+# mount=tshamsoo:
+#   bind: ./tshamsoo/
+#   path: /tshamsoo/
+#   read-only: true
 
-mount=data:
-  bind: ./{env.PANPUN}-{env.GIGIAN}-data/
-  path: /data/
+# mount=data:
+#   bind: ./{env.BANBUN}-{env.GIGIAN}-data/
+#   path: /data/
 
-mount=outputs:
-  bind: ./{env.PANPUN}-{env.GIGIAN}-model_outputs/
-  path: /WaveRNN/model_outputs/
+# mount=outputs:
+#   bind: ./{env.BANBUN}-{env.GIGIAN}-model_outputs/
+#   path: /WaveRNN/model_outputs/
 
-mount=checkpoints:
-  bind: ./{env.PANPUN}-{env.GIGIAN}-checkpoints/
-  path: /WaveRNN/checkpoints/
+# mount=checkpoints:
+#   bind: ./{env.BANBUN}-{env.GIGIAN}-checkpoints/
+#   path: /WaveRNN/checkpoints/
 
 image=ubuntu:
   image: ubuntu
   tags: ['20.04']
   pull: once
 
-job=liah-giliau-job:
+job=hazoi-ngiliau-job:
   use: ubuntu
   env:
-  - PANPUN={env.PANPUN}
-  - BANGTSI={env.BANGTSI}
+  - BANBUN={env.BANBUN}
+  - MIONGZII={env.MIONGZII}
   command: |
     bash -eux -c '
       apt-get update
       apt-get install -y wget
-      wget -O - $BANGTSI | tar -xvf - -C /punte_giliau
+      wget -O - $MIONGZII | tar -xvf - -C /pun_ngiliau
     '
-  mounts: [punte_giliau, ]
+  mounts: [pun_ngiliau, ]
 
-job=tsuan-pianma-job:
-  use: ubuntu
-  env:
-  - PANPUN={env.PANPUN}
-  - GIGIAN={env.GIGIAN}
-  - PINLUT={env.PINLUT}
-  command: |
-    bash -eux -c '
-      apt-get update
-      apt-get install -y ffmpeg sox
-      cp -r csv_imtong /giliau/
-      mkdir -p /giliau/mp3 /tsiamsi/mp3
-      find . -name "*${GIGIAN}*.mp3" -exec ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar $PINLUT /tsiamsi/{}.wav \;
-      find /tsiamsi/ -type f -empty -delete
-      find . -name "*${GIGIAN}*.mp3" -exec sox /tsiamsi/{}.wav /giliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse \;
-      find /giliau/mp3/ -size -1000c -delete
-    '
-  mounts: [punte_giliau, giliau, ]
-  working-dir: /punte_giliau
+# job=tsuan-pianma-job:
+#   use: ubuntu
+#   env:
+#   - BANBUN={env.BANBUN}
+#   - GIGIAN={env.GIGIAN}
+#   - PINLUT={env.PINLUT}
+#   command: |
+#     bash -eux -c '
+#       apt-get update
+#       apt-get install -y ffmpeg sox
+#       cp -r csv_imtong /giliau/
+#       mkdir -p /giliau/mp3 /tsiamsi/mp3
+#       find . -name "*${GIGIAN}*.mp3" -exec ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar $PINLUT /tsiamsi/{}.wav \;
+#       find /tsiamsi/ -type f -empty -delete
+#       find . -name "*${GIGIAN}*.mp3" -exec sox /tsiamsi/{}.wav /giliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse \;
+#       find /giliau/mp3/ -size -1000c -delete
+#     '
+#   mounts: [punte_giliau, giliau, ]
+#   working-dir: /punte_giliau
 
-image=hunlian-khuanking:
-  image: hunlian-khuanking
-  context: hunlian-khuanking
+# image=hunlian-khuanking:
+#   image: hunlian-khuanking
+#   context: hunlian-khuanking
 
-job=preprocess-tacotron-job:
-  use: hunlian-khuanking
-  env:
-  - PANPUN={env.PANPUN}
-  - GIGIAN={env.GIGIAN}
-  - PINLUT={env.PINLUT}
-  command: |
-    bash -eux -c '
-      cp /tshamsoo/hparams.py .
-      cp /tshamsoo/preprocess-tacotron.py .
-      cp /tshamsoo/text_init.py utils/text/__init__.py
-      cp /tshamsoo/symbols.py utils/text/symbols.py
-      python preprocess-tacotron.py --path /giliau/
-    '
-  mounts: [giliau, tshamsoo, data, ]
+# job=preprocess-tacotron-job:
+#   use: hunlian-khuanking
+#   env:
+#   - BANBUN={env.BANBUN}
+#   - GIGIAN={env.GIGIAN}
+#   - PINLUT={env.PINLUT}
+#   command: |
+#     bash -eux -c '
+#       cp /tshamsoo/hparams.py .
+#       cp /tshamsoo/preprocess-tacotron.py .
+#       cp /tshamsoo/text_init.py utils/text/__init__.py
+#       cp /tshamsoo/symbols.py utils/text/symbols.py
+#       python preprocess-tacotron.py --path /giliau/
+#     '
+#   mounts: [giliau, tshamsoo, data, ]
 
-job=tacotron-job:
-  use: hunlian-khuanking
-  env:
-  - PANPUN={env.PANPUN}
-  - GIGIAN={env.GIGIAN}
-  - CUDA_VISIBLE_DEVICES=0
-  command: |
-    bash -eux -c '
-      cp /tshamsoo/hparams.py .
-      cp /tshamsoo/text_init.py utils/text/__init__.py
-      cp /tshamsoo/symbols.py utils/text/symbols.py
-      python train_tacotron.py
-    '
-  mounts: [tshamsoo, data, checkpoints, ]
+# job=tacotron-job:
+#   use: hunlian-khuanking
+#   env:
+#   - BANBUN={env.BANBUN}
+#   - GIGIAN={env.GIGIAN}
+#   - CUDA_VISIBLE_DEVICES=0
+#   command: |
+#     bash -eux -c '
+#       cp /tshamsoo/hparams.py .
+#       cp /tshamsoo/text_init.py utils/text/__init__.py
+#       cp /tshamsoo/symbols.py utils/text/symbols.py
+#       python train_tacotron.py
+#     '
+#   mounts: [tshamsoo, data, checkpoints, ]
 
-job=tacotron-gta-job:
-  use: hunlian-khuanking
-  env:
-  - PANPUN={env.PANPUN}
-  - GIGIAN={env.GIGIAN}
-  - CUDA_VISIBLE_DEVICES=0
-  command: |
-    bash -eux -c '
-      cp /tshamsoo/hparams.py .
-      cp /tshamsoo/text_init.py utils/text/__init__.py
-      cp /tshamsoo/symbols.py utils/text/symbols.py
-      python train_tacotron.py --force_gta
-    '
-  mounts: [tshamsoo, data, checkpoints, ]
+# job=tacotron-gta-job:
+#   use: hunlian-khuanking
+#   env:
+#   - BANBUN={env.BANBUN}
+#   - GIGIAN={env.GIGIAN}
+#   - CUDA_VISIBLE_DEVICES=0
+#   command: |
+#     bash -eux -c '
+#       cp /tshamsoo/hparams.py .
+#       cp /tshamsoo/text_init.py utils/text/__init__.py
+#       cp /tshamsoo/symbols.py utils/text/symbols.py
+#       python train_tacotron.py --force_gta
+#     '
+#   mounts: [tshamsoo, data, checkpoints, ]
 
-job=preprocess-wavernn-job:
-  use: hunlian-khuanking
-  env:
-  - PANPUN={env.PANPUN}
-  - GIGIAN={env.GIGIAN}
-  command: |
-    bash -eux -c '
-      cp /tshamsoo/hparams.py .
-      cp /tshamsoo/preprocess-wavernn.py .
-      python preprocess-wavernn.py --path /data/gta/
-    '
-  mounts: [tshamsoo, data, ]
+# job=preprocess-wavernn-job:
+#   use: hunlian-khuanking
+#   env:
+#   - BANBUN={env.BANBUN}
+#   - GIGIAN={env.GIGIAN}
+#   command: |
+#     bash -eux -c '
+#       cp /tshamsoo/hparams.py .
+#       cp /tshamsoo/preprocess-wavernn.py .
+#       python preprocess-wavernn.py --path /data/gta/
+#     '
+#   mounts: [tshamsoo, data, ]
 
-job=wavernn-job:
-  use: hunlian-khuanking
-  env:
-  - PANPUN={env.PANPUN}
-  - GIGIAN={env.GIGIAN}
-  - CUDA_VISIBLE_DEVICES=0
-  command: |
-    bash -eux -c '
-      cp /tshamsoo/hparams.py .
-      cp /tshamsoo/text_init.py utils/text/__init__.py
-      cp /tshamsoo/symbols.py utils/text/symbols.py
-      sed -i "s/dataset.pkl/dataset_wavernn.pkl/g" utils/dataset.py
-      python train_wavernn.py --gta
-    '
-  mounts: [tshamsoo, data, checkpoints, outputs, ]
+# job=wavernn-job:
+#   use: hunlian-khuanking
+#   env:
+#   - BANBUN={env.BANBUN}
+#   - GIGIAN={env.GIGIAN}
+#   - CUDA_VISIBLE_DEVICES=0
+#   command: |
+#     bash -eux -c '
+#       cp /tshamsoo/hparams.py .
+#       cp /tshamsoo/text_init.py utils/text/__init__.py
+#       cp /tshamsoo/symbols.py utils/text/symbols.py
+#       sed -i "s/dataset.pkl/dataset_wavernn.pkl/g" utils/dataset.py
+#       python train_wavernn.py --gta
+#     '
+#   mounts: [tshamsoo, data, checkpoints, outputs, ]
 
-job=huatsiann-job:
-  use: hunlian-khuanking
-  env:
-  - KU={env.KU:Kiung ha loiˇ liau dong senˊ qi}
-  - PANPUN={env.PANPUN}
-  - GIGIAN={env.GIGIAN}
-  - CUDA_VISIBLE_DEVICES=1
-  command: |
-    bash -eux -c '
-      cp /tshamsoo/hparams.py .
-      cp /tshamsoo/text_init.py utils/text/__init__.py
-      cp /tshamsoo/symbols.py utils/text/symbols.py
-      sed -i "s/required=True, //g" gen_tacotron.py
-      time python gen_tacotron.py --input_text "$KU" griffinlim
-      time python gen_tacotron.py --input_text "$KU" wavernn
-      time python gen_tacotron.py --input_text "$KU" wavernn --unbatched
-    '
-  mounts: [tshamsoo, checkpoints, outputs, ]
+# job=huatsiann-job:
+#   use: hunlian-khuanking
+#   env:
+#   - KU={env.KU:Kiung ha loiˇ liau dong senˊ qi}
+#   - BANBUN={env.BANBUN}
+#   - GIGIAN={env.GIGIAN}
+#   - CUDA_VISIBLE_DEVICES=1
+#   command: |
+#     bash -eux -c '
+#       cp /tshamsoo/hparams.py .
+#       cp /tshamsoo/text_init.py utils/text/__init__.py
+#       cp /tshamsoo/symbols.py utils/text/symbols.py
+#       sed -i "s/required=True, //g" gen_tacotron.py
+#       time python gen_tacotron.py --input_text "$KU" griffinlim
+#       time python gen_tacotron.py --input_text "$KU" wavernn
+#       time python gen_tacotron.py --input_text "$KU" wavernn --unbatched
+#     '
+#   mounts: [tshamsoo, checkpoints, outputs, ]
 
-image=hokbu-khuanking:
-  image: i3thuan5/suisiann-wavernn
-  context: .
+# image=hokbu-khuanking:
+#   image: i3thuan5/suisiann-wavernn
+#   context: .
