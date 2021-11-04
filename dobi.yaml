@@ -10,7 +10,8 @@ env=sadtin:
   variables:
   - BANBUN=ciidien-20190516
   - KIONG=si
-  - MIONGZII=https://www.dropbox.com/s/gs6gk8zuehxbqti/moe-hakka-sound.tar?dl=0
+  - VUN_MIONGZII=https://github.com/i3thuan5/moe-hakkadict/archive/refs/heads/main.zip
+  - SANG_MIONGZII=https://www.dropbox.com/s/gs6gk8zuehxbqti/moe-hakka-sound.tar?dl=0
   - PIN=16k
 
 alias=hazoi-ngiliau:
@@ -71,12 +72,18 @@ job=hazoi-ngiliau-job:
   use: ubuntu
   env:
   - BANBUN={env.BANBUN}
-  - MIONGZII={env.MIONGZII}
+  - VUN_MIONGZII={env.VUN_MIONGZII}
+  - SANG_MIONGZII={env.SANG_MIONGZII}
+  - LANG=C.UTF-8
+  - LANGUAGE=C.UTF-8
+  - LC_ALL=C.UTF-8
   command: |
     bash -eux -c '
       apt-get update
-      apt-get install -y wget
-      wget -O - $MIONGZII | tar -xvf - -C /pun_ngiliau
+      apt-get install -y wget unzip
+      wget -O bun.zip $VUN_MIONGZII
+      unzip -o -O utf-8 bun.zip -d /pun_ngiliau
+      wget -O - $SANG_MIONGZII | tar -xvf - -C /pun_ngiliau
     '
   mounts: [pun_ngiliau, ]
 

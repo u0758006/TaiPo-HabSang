@@ -8,7 +8,7 @@
 - 設定docker權限`sudo usermod -aG docker $USER`
 
 ## 步
-1. 先用`time dobi hazoi-ngiliau`，會下載客語能力認證，下載好會恁樣
+1. 先用`time dobi hazoi-ngiliau`，會下載客語教典詞音檔，下載好會恁樣：
 ```
 1-ciidien-20190516/
 └── corpus
