@@ -24,8 +24,8 @@ alias=zon-bienma:
 alias=preprocess-tacotron:
   tasks: [sadtin, preprocess-tacotron-job, ]
 
-# alias=tacotron:
-#   tasks: [sadtin, tacotron-job, ]
+alias=tacotron:
+  tasks: [sadtin, tacotron-job, ]
 
 # alias=tacotron-gta:
 #   tasks: [sadtin, tacotron-gta-job, ]
@@ -56,13 +56,13 @@ mount=data:
   bind: ./3-{env.BANBUN}-{env.PIN}-{env.NGINGIEN}-data/
   path: /data/
 
+mount=checkpoints:
+  bind: ./4-{env.BANBUN}-{env.PIN}-{env.NGINGIEN}-checkpoints/
+  path: /WaveRNN/checkpoints/
+
 # mount=outputs:
 #   bind: ./{env.BANBUN}-{env.NGINGIEN}-model_outputs/
 #   path: /WaveRNN/model_outputs/
-
-# mount=checkpoints:
-#   bind: ./{env.BANBUN}-{env.NGINGIEN}-checkpoints/
-#   path: /WaveRNN/checkpoints/
 
 image=ubuntu:
   image: ubuntu
@@ -127,25 +127,25 @@ job=preprocess-tacotron-job:
       cp /camsu/hparams.py .
       cp /camsu/preprocess-tacotron.py .
       cp /camsu/text_init.py utils/text/__init__.py
-      cp /camsu/symbols.py utils/text/symbols.py
+      cp /camsu/text_symbols.py utils/text/text_symbols.py
       python preprocess-tacotron.py --path /zon_ngiliau/
     '
   mounts: [zon_ngiliau, camsu, data, ]
 
-# job=tacotron-job:
-#   use: hiunlien-kuangin
-#   env:
-#   - BANBUN={env.BANBUN}
-#   - NGINGIEN={env.NGINGIEN}
-#   - CUDA_VISIBLE_DEVICES=0
-#   command: |
-#     bash -eux -c '
-#       cp /camsu/hparams.py .
-#       cp /camsu/text_init.py utils/text/__init__.py
-#       cp /camsu/symbols.py utils/text/symbols.py
-#       python train_tacotron.py
-#     '
-#   mounts: [camsu, data, checkpoints, ]
+job=tacotron-job:
+  use: hiunlien-kuangin
+  env:
+  - BANBUN={env.BANBUN}
+  - NGINGIEN={env.NGINGIEN}
+  - CUDA_VISIBLE_DEVICES=0
+  command: |
+    bash -eux -c '
+      cp /camsu/hparams.py .
+      cp /camsu/text_init.py utils/text/__init__.py
+      cp /camsu/text_symbols.py utils/text/text_symbols.py
+      python train_tacotron.py
+    '
+  mounts: [camsu, data, checkpoints, ]
 
 # job=tacotron-gta-job:
 #   use: hiunlien-kuangin
@@ -157,7 +157,7 @@ job=preprocess-tacotron-job:
 #     bash -eux -c '
 #       cp /camsu/hparams.py .
 #       cp /camsu/text_init.py utils/text/__init__.py
-#       cp /camsu/symbols.py utils/text/symbols.py
+#       cp /camsu/text_symbols.py utils/text/text_symbols.py
 #       python train_tacotron.py --force_gta
 #     '
 #   mounts: [camsu, data, checkpoints, ]
@@ -185,7 +185,7 @@ job=preprocess-tacotron-job:
 #     bash -eux -c '
 #       cp /camsu/hparams.py .
 #       cp /camsu/text_init.py utils/text/__init__.py
-#       cp /camsu/symbols.py utils/text/symbols.py
+#       cp /camsu/text_symbols.py utils/text/text_symbols.py
 #       sed -i "s/dataset.pkl/dataset_wavernn.pkl/g" utils/dataset.py
 #       python train_wavernn.py --gta
 #     '
@@ -202,7 +202,7 @@ job=preprocess-tacotron-job:
 #     bash -eux -c '
 #       cp /camsu/hparams.py .
 #       cp /camsu/text_init.py utils/text/__init__.py
-#       cp /camsu/symbols.py utils/text/symbols.py
+#       cp /camsu/text_symbols.py utils/text/text_symbols.py
 #       sed -i "s/required=True, //g" gen_tacotron.py
 #       time python gen_tacotron.py --input_text "$KU" griffinlim
 #       time python gen_tacotron.py --input_text "$KU" wavernn

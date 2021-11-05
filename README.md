@@ -87,7 +87,7 @@
 │   └── 15450.mp3.npy
 └── text_dict.pkl
 ```
-4. `time dobi tacotron`，訓練Tacotron模型。假使在tactorn訓練時節，愛產生gta檔案，走`dobi tacotron-gta`。
+4. `time dobi tacotron`，訓練Tacotron模型。假使在tactorn訓練時節，愛產生`gta/`檔案，走`dobi tacotron-gta`。
 5. `time dobi preprocess-wavernn`，照gta檔案，產生wavernn愛个`dataset_wavernn.pkl`。
 6. `time dobi wavernn`，訓練WaveRNN模型。
 7. `time dobi huatsiann`，合成語句。
