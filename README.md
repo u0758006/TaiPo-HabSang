@@ -70,11 +70,27 @@
     │   └── 《臺灣客家語常用詞辭典》內容資料(1100430).csv
     └── 轉做調型資料.py
 ```
-3. `time dobi preprocess-tacotron`，準備tactorn格式。
-4. `time dobi tacotron`，訓練Tacotron模型。若是tī tactorn訓練中，欲產生gta檔案，走`dobi tacotron-gta`。
-5. `time dobi preprocess-wavernn`，照gta檔案，產生wavernn需要ê`dataset.pkl`
-6. `time dobi wavernn`，訓練WaveRNN模型
-7. `time dobi huatsiann`，合成語句
+3. `time dobi preprocess-tacotron`，準備tactorn格式，產生音檔長短`dataset.pkl`，音檔羅馬字對應`text_dict.pkl`、頻譜`mel/`、`quant/`。
+```
+3-ciidien-20190516-16k-MeuLid-data/
+├── dataset.pkl
+├── gta
+├── mel
+│   ├── 00001.mp3.npy
+│   ├── 00002.mp3.npy
+│   ├── ...
+│   └── 15450.mp3.npy
+├── quant
+│   ├── 00001.mp3.npy
+│   ├── 00002.mp3.npy
+│   ├── ...
+│   └── 15450.mp3.npy
+└── text_dict.pkl
+```
+4. `time dobi tacotron`，訓練Tacotron模型。假使在tactorn訓練時節，愛產生gta檔案，走`dobi tacotron-gta`。
+5. `time dobi preprocess-wavernn`，照gta檔案，產生wavernn愛个`dataset_wavernn.pkl`。
+6. `time dobi wavernn`，訓練WaveRNN模型。
+7. `time dobi huatsiann`，合成語句。
 
 #### Pau--khi-lai
 ```
