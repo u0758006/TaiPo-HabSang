@@ -62,20 +62,18 @@ def ciidien(path: Union[str, Path], vun, wav_files):
 
 def qim_ciidien(path: Union[str, Path], vun, wav_files):
     csv_files = get_files(path, extension='.csv')
-    print('path',path)
 
     iu_imdong = set()
-    for wav_sootsai in wav_files:
-        mia = basename(wav_sootsai)
-        if mia.endswith('.wav'):
-            iu_imdong.add(mia[:-4])
+    for imdong in wav_files:
+        iu_imdong.add(imdong.stem)
 
     if len(csv_files) != 1:
         raise RuntimeError('文字語料尋無！')
+
     with open(csv_files[0], encoding='utf-8') as f:
         for su, hang in enumerate(DictReader(f)):
             miang = '{:05}.mp3'.format(su)
-            if mia in iu_imdong:
+            if miang in iu_imdong:
                 honsii = hang['詞目']
                 lomasii = hang[vun]
                 yield honsii, lomasii, miang
