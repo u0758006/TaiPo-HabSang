@@ -17,8 +17,8 @@ env=sadtin:
 alias=hazoi-ngiliau:
   tasks: [sadtin, hazoi-ngiliau-job]
 
-# alias=tsuan-pianma:
-#   tasks: [siatting, tsuan-pianma-job]
+alias=zon-bienma:
+  tasks: [sadtin, zon-bienma-job]
 
 # alias=preprocess-tacotron:
 #   tasks: [siatting, preprocess-tacotron-job, ]
@@ -42,8 +42,8 @@ mount=pun_ngiliau:
   bind: ./1-{env.BANBUN}/
   path: /pun_ngiliau/
 
-mount=ngiliau:
-  bind: ./{env.BANBUN}-{env.NGINGIEN}-{env.PIN}/
+mount=zon_ngiliau:
+  bind: ./{env.BANBUN}-{env.PIN}/
   path: /zon_giliau/
 
 # mount=tshamsoo:
@@ -52,15 +52,15 @@ mount=ngiliau:
 #   read-only: true
 
 # mount=data:
-#   bind: ./{env.BANBUN}-{env.GIGIAN}-data/
+#   bind: ./{env.BANBUN}-{env.KIONG}-data/
 #   path: /data/
 
 # mount=outputs:
-#   bind: ./{env.BANBUN}-{env.GIGIAN}-model_outputs/
+#   bind: ./{env.BANBUN}-{env.KIONG}-model_outputs/
 #   path: /WaveRNN/model_outputs/
 
 # mount=checkpoints:
-#   bind: ./{env.BANBUN}-{env.GIGIAN}-checkpoints/
+#   bind: ./{env.BANBUN}-{env.KIONG}-checkpoints/
 #   path: /WaveRNN/checkpoints/
 
 image=ubuntu:
@@ -87,25 +87,24 @@ job=hazoi-ngiliau-job:
     '
   mounts: [pun_ngiliau, ]
 
-# job=tsuan-pianma-job:
-#   use: ubuntu
-#   env:
-#   - BANBUN={env.BANBUN}
-#   - GIGIAN={env.GIGIAN}
-#   - PINLUT={env.PINLUT}
-#   command: |
-#     bash -eux -c '
-#       apt-get update
-#       apt-get install -y ffmpeg sox
-#       cp -r csv_imtong /giliau/
-#       mkdir -p /giliau/mp3 /tsiamsi/mp3
-#       find . -name "*${GIGIAN}*.mp3" -exec ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar $PINLUT /tsiamsi/{}.wav \;
-#       find /tsiamsi/ -type f -empty -delete
-#       find . -name "*${GIGIAN}*.mp3" -exec sox /tsiamsi/{}.wav /giliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse \;
-#       find /giliau/mp3/ -size -1000c -delete
-#     '
-#   mounts: [punte_giliau, giliau, ]
-#   working-dir: /punte_giliau
+job=zon-bienma-job:
+  use: ubuntu
+  env:
+  - BANBUN={env.BANBUN}
+  - PIN={env.PIN}
+  command: |
+    bash -eux -c '
+      apt-get update
+      apt-get install -y ffmpeg sox
+      cp -r moe-hakkadict-main /zon_ngiliau/
+      mkdir -p /zon_ngiliau/corpus /qiamsii/corpus
+      find . -name "*.mp3" -exec ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar $PIN /qiamsii/{}.wav \;
+      find /qiamsii/ -type f -empty -delete
+      find . -name "*.mp3" -exec sox /qiamsii/{}.wav /zon_ngiliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse \;
+      find /zon_ngiliau/corpus/ -size -1000c -delete
+    '
+  mounts: [pun_ngiliau, zon_ngiliau, ]
+  working-dir: /bun_giliau
 
 # image=hunlian-khuanking:
 #   image: hunlian-khuanking
@@ -115,8 +114,8 @@ job=hazoi-ngiliau-job:
 #   use: hunlian-khuanking
 #   env:
 #   - BANBUN={env.BANBUN}
-#   - GIGIAN={env.GIGIAN}
-#   - PINLUT={env.PINLUT}
+#   - KIONG={env.KIONG}
+#   - PIN={env.PIN}
 #   command: |
 #     bash -eux -c '
 #       cp /tshamsoo/hparams.py .
@@ -131,7 +130,7 @@ job=hazoi-ngiliau-job:
 #   use: hunlian-khuanking
 #   env:
 #   - BANBUN={env.BANBUN}
-#   - GIGIAN={env.GIGIAN}
+#   - KIONG={env.KIONG}
 #   - CUDA_VISIBLE_DEVICES=0
 #   command: |
 #     bash -eux -c '
@@ -146,7 +145,7 @@ job=hazoi-ngiliau-job:
 #   use: hunlian-khuanking
 #   env:
 #   - BANBUN={env.BANBUN}
-#   - GIGIAN={env.GIGIAN}
+#   - KIONG={env.KIONG}
 #   - CUDA_VISIBLE_DEVICES=0
 #   command: |
 #     bash -eux -c '
@@ -161,7 +160,7 @@ job=hazoi-ngiliau-job:
 #   use: hunlian-khuanking
 #   env:
 #   - BANBUN={env.BANBUN}
-#   - GIGIAN={env.GIGIAN}
+#   - KIONG={env.KIONG}
 #   command: |
 #     bash -eux -c '
 #       cp /tshamsoo/hparams.py .
@@ -174,7 +173,7 @@ job=hazoi-ngiliau-job:
 #   use: hunlian-khuanking
 #   env:
 #   - BANBUN={env.BANBUN}
-#   - GIGIAN={env.GIGIAN}
+#   - KIONG={env.KIONG}
 #   - CUDA_VISIBLE_DEVICES=0
 #   command: |
 #     bash -eux -c '
@@ -191,7 +190,7 @@ job=hazoi-ngiliau-job:
 #   env:
 #   - KU={env.KU:Kiung ha loiˇ liau dong senˊ qi}
 #   - BANBUN={env.BANBUN}
-#   - GIGIAN={env.GIGIAN}
+#   - KIONG={env.KIONG}
 #   - CUDA_VISIBLE_DEVICES=1
 #   command: |
 #     bash -eux -c '
