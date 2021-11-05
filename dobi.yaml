@@ -9,7 +9,7 @@ meta:
 env=sadtin:
   variables:
   - BANBUN=ciidien-20190516
-  - KIONG=si
+  - KIONG=meulidfa
   - VUN_MIONGZII=https://github.com/i3thuan5/moe-hakkadict/archive/refs/heads/main.zip
   - SANG_MIONGZII=https://www.dropbox.com/s/gs6gk8zuehxbqti/moe-hakka-sound.tar?dl=0
   - PIN=16k
@@ -21,23 +21,23 @@ alias=hazoi-ngiliau:
 alias=zon-bienma:
   tasks: [sadtin, zon-bienma-job]
 
-# alias=preprocess-tacotron:
-#   tasks: [siatting, preprocess-tacotron-job, ]
+alias=preprocess-tacotron:
+  tasks: [sadtin, preprocess-tacotron-job, ]
 
 # alias=tacotron:
-#   tasks: [siatting, tacotron-job, ]
+#   tasks: [sadtin, tacotron-job, ]
 
 # alias=tacotron-gta:
-#   tasks: [siatting, tacotron-gta-job, ]
+#   tasks: [sadtin, tacotron-gta-job, ]
 
 # alias=preprocess-wavernn:
-#   tasks: [siatting, preprocess-wavernn-job, ]
+#   tasks: [sadtin, preprocess-wavernn-job, ]
 
 # alias=wavernn:
-#   tasks: [siatting, wavernn-job, ]
+#   tasks: [sadtin, wavernn-job, ]
 
 # alias=huatsiann:
-#   tasks: [siatting, huatsiann-job, ]
+#   tasks: [sadtin, huatsiann-job, ]
 
 mount=pun_ngiliau:
   bind: ./1-{env.BANBUN}/
@@ -47,14 +47,14 @@ mount=zon_ngiliau:
   bind: ./2-{env.BANBUN}-{env.PIN}/
   path: /zon_giliau/
 
-# mount=tshamsoo:
-#   bind: ./tshamsoo/
-#   path: /tshamsoo/
-#   read-only: true
+mount=camsu:
+  bind: ./camsu/
+  path: /camsu/
+  read-only: true
 
-# mount=data:
-#   bind: ./{env.BANBUN}-{env.KIONG}-data/
-#   path: /data/
+mount=data:
+  bind: ./3-{env.BANBUN}-{env.PIN}-{env.KIONG}-data/
+  path: /data/
 
 # mount=outputs:
 #   bind: ./{env.BANBUN}-{env.KIONG}-model_outputs/
@@ -111,87 +111,87 @@ job=zon-bienma-job:
   mounts: [pun_ngiliau, zon_ngiliau, ]
   working-dir: /pun_ngiliau
 
-# image=hunlian-khuanking:
-#   image: hunlian-khuanking
-#   context: hunlian-khuanking
+image=hiunlien-kuangin:
+  image: hiunlien-kuangin
+  context: hiunlien-kuangin
 
-# job=preprocess-tacotron-job:
-#   use: hunlian-khuanking
-#   env:
-#   - BANBUN={env.BANBUN}
-#   - KIONG={env.KIONG}
-#   - PIN={env.PIN}
-#   command: |
-#     bash -eux -c '
-#       cp /tshamsoo/hparams.py .
-#       cp /tshamsoo/preprocess-tacotron.py .
-#       cp /tshamsoo/text_init.py utils/text/__init__.py
-#       cp /tshamsoo/symbols.py utils/text/symbols.py
-#       python preprocess-tacotron.py --path /giliau/
-#     '
-#   mounts: [giliau, tshamsoo, data, ]
+job=preprocess-tacotron-job:
+  use: hiunlien-kuangin
+  env:
+  - BANBUN={env.BANBUN}
+  - KIONG={env.KIONG}
+  - PIN={env.PIN}
+  command: |
+    bash -eux -c '
+      cp /camsu/hparams.py .
+      cp /camsu/preprocess-tacotron.py .
+      cp /camsu/text_init.py utils/text/__init__.py
+      cp /camsu/symbols.py utils/text/symbols.py
+      python preprocess-tacotron.py --path /giliau/
+    '
+  mounts: [zon-ngiliau, camsu, data, ]
 
 # job=tacotron-job:
-#   use: hunlian-khuanking
+#   use: hiunlien-kuangin
 #   env:
 #   - BANBUN={env.BANBUN}
 #   - KIONG={env.KIONG}
 #   - CUDA_VISIBLE_DEVICES=0
 #   command: |
 #     bash -eux -c '
-#       cp /tshamsoo/hparams.py .
-#       cp /tshamsoo/text_init.py utils/text/__init__.py
-#       cp /tshamsoo/symbols.py utils/text/symbols.py
+#       cp /camsu/hparams.py .
+#       cp /camsu/text_init.py utils/text/__init__.py
+#       cp /camsu/symbols.py utils/text/symbols.py
 #       python train_tacotron.py
 #     '
-#   mounts: [tshamsoo, data, checkpoints, ]
+#   mounts: [camsu, data, checkpoints, ]
 
 # job=tacotron-gta-job:
-#   use: hunlian-khuanking
+#   use: hiunlien-kuangin
 #   env:
 #   - BANBUN={env.BANBUN}
 #   - KIONG={env.KIONG}
 #   - CUDA_VISIBLE_DEVICES=0
 #   command: |
 #     bash -eux -c '
-#       cp /tshamsoo/hparams.py .
-#       cp /tshamsoo/text_init.py utils/text/__init__.py
-#       cp /tshamsoo/symbols.py utils/text/symbols.py
+#       cp /camsu/hparams.py .
+#       cp /camsu/text_init.py utils/text/__init__.py
+#       cp /camsu/symbols.py utils/text/symbols.py
 #       python train_tacotron.py --force_gta
 #     '
-#   mounts: [tshamsoo, data, checkpoints, ]
+#   mounts: [camsu, data, checkpoints, ]
 
 # job=preprocess-wavernn-job:
-#   use: hunlian-khuanking
+#   use: hiunlien-kuangin
 #   env:
 #   - BANBUN={env.BANBUN}
 #   - KIONG={env.KIONG}
 #   command: |
 #     bash -eux -c '
-#       cp /tshamsoo/hparams.py .
-#       cp /tshamsoo/preprocess-wavernn.py .
+#       cp /camsu/hparams.py .
+#       cp /camsu/preprocess-wavernn.py .
 #       python preprocess-wavernn.py --path /data/gta/
 #     '
-#   mounts: [tshamsoo, data, ]
+#   mounts: [camsu, data, ]
 
 # job=wavernn-job:
-#   use: hunlian-khuanking
+#   use: hiunlien-kuangin
 #   env:
 #   - BANBUN={env.BANBUN}
 #   - KIONG={env.KIONG}
 #   - CUDA_VISIBLE_DEVICES=0
 #   command: |
 #     bash -eux -c '
-#       cp /tshamsoo/hparams.py .
-#       cp /tshamsoo/text_init.py utils/text/__init__.py
-#       cp /tshamsoo/symbols.py utils/text/symbols.py
+#       cp /camsu/hparams.py .
+#       cp /camsu/text_init.py utils/text/__init__.py
+#       cp /camsu/symbols.py utils/text/symbols.py
 #       sed -i "s/dataset.pkl/dataset_wavernn.pkl/g" utils/dataset.py
 #       python train_wavernn.py --gta
 #     '
-#   mounts: [tshamsoo, data, checkpoints, outputs, ]
+#   mounts: [camsu, data, checkpoints, outputs, ]
 
 # job=huatsiann-job:
-#   use: hunlian-khuanking
+#   use: hiunlien-kuangin
 #   env:
 #   - KU={env.KU:Kiung ha loiˇ liau dong senˊ qi}
 #   - BANBUN={env.BANBUN}
@@ -199,16 +199,16 @@ job=zon-bienma-job:
 #   - CUDA_VISIBLE_DEVICES=1
 #   command: |
 #     bash -eux -c '
-#       cp /tshamsoo/hparams.py .
-#       cp /tshamsoo/text_init.py utils/text/__init__.py
-#       cp /tshamsoo/symbols.py utils/text/symbols.py
+#       cp /camsu/hparams.py .
+#       cp /camsu/text_init.py utils/text/__init__.py
+#       cp /camsu/symbols.py utils/text/symbols.py
 #       sed -i "s/required=True, //g" gen_tacotron.py
 #       time python gen_tacotron.py --input_text "$KU" griffinlim
 #       time python gen_tacotron.py --input_text "$KU" wavernn
 #       time python gen_tacotron.py --input_text "$KU" wavernn --unbatched
 #     '
-#   mounts: [tshamsoo, checkpoints, outputs, ]
+#   mounts: [camsu, checkpoints, outputs, ]
 
-# image=hokbu-khuanking:
+# image=hokbu-kuangin:
 #   image: i3thuan5/suisiann-wavernn
 #   context: .
