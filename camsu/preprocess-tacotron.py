@@ -56,12 +56,15 @@ def ciidien(path: Union[str, Path], wav_files):
     text_dict = {}
     for _honsii, lomasii, imdongmiang in qim_ciidien(path, wav_files):
             text_dict[imdongmiang] = lomasii
-
+    print('text_dict', text_dict)
     return text_dict
 
 
 def qim_ciidien(path: Union[str, Path], wav_files):
-    csv_files = get_files(os.path.join(path, '調型資料'), extension='.csv')
+    csv_files = get_files(
+        os.path.join(path, 'moe-hakkadict-main', '調型資料'),
+        extension='.csv'
+    )
 
     iu_imdong = set()
     for wav_sootsai in wav_files:
