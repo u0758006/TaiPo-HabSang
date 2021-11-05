@@ -51,14 +51,14 @@ if len(wav_files) == 0:
 else:
 
     if not hp.ignore_tts:
-        u_tihleh = set()
-        for sootsai in wav_files:
-            u_tihleh.add(splitext(basename(sootsai))[0])
+        iu_imdong = set()
+        for imdong in wav_files:
+            iu_imdong.add(imdong.stem)
 
         dataset_wavernn = []
         with open(paths.data / 'dataset.pkl', 'rb') as f:
             for item_id, length in pickle.load(f):
-                if item_id in u_tihleh:
+                if item_id in iu_imdong:
                     dataset_wavernn.append((item_id, length))
 
         with open(paths.data / 'dataset_wavernn.pkl', 'wb') as f:
