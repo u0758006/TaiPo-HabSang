@@ -72,7 +72,7 @@ def qim_ciidien(path: Union[str, Path], vun, wav_files):
 
     with open(csv_files[0], encoding='utf-8') as f:
         for su, hang in enumerate(DictReader(f), start=1):
-            miang = '{:05}.mp3'.format(su)
+            miang = '{}.mp3'.format(hang['系統編號'][-5:])
             if miang in iu_imdong:
                 honsii = hang['詞目']
                 lomasii = hang[vun]
