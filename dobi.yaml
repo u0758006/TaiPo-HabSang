@@ -43,7 +43,7 @@ mount=pun_ngiliau:
   path: /pun_ngiliau/
 
 mount=zon_ngiliau:
-  bind: ./{env.BANBUN}-{env.PIN}/
+  bind: ./2-{env.BANBUN}-{env.PIN}/
   path: /zon_giliau/
 
 # mount=tshamsoo:
@@ -104,7 +104,7 @@ job=zon-bienma-job:
       find /zon_ngiliau/corpus/ -size -1000c -delete
     '
   mounts: [pun_ngiliau, zon_ngiliau, ]
-  working-dir: /bun_giliau
+  working-dir: /pun_ngiliau
 
 # image=hunlian-khuanking:
 #   image: hunlian-khuanking
