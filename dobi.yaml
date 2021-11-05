@@ -98,9 +98,12 @@ job=zon-bienma-job:
       apt-get install -y ffmpeg sox
       cp -r moe-hakkadict-main /zon_ngiliau/
       mkdir -p /zon_ngiliau/corpus /qiamsii/corpus
-      find . -name "*.mp3" -exec ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar $PIN /qiamsii/{}.wav \;
+      find . -type d -exec mkdir -p /qiamsii/{} \;
+      find . -name "*.mp3" -print0 | \
+        xargs -0 -L 1 -P 4 -I{} ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar $PIN /qiamsii/{}.wav
       find /qiamsii/ -type f -empty -delete
-      find . -name "*.mp3" -exec sox /qiamsii/{}.wav /zon_ngiliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse \;
+      find . -name "*.mp3" -print0 | \
+        xargs -0 -L 1 -P 4 -I{} sox /qiamsii/{}.wav /zon_ngiliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse
       find /zon_ngiliau/corpus/ -size -1000c -delete
     '
   mounts: [pun_ngiliau, zon_ngiliau, ]
