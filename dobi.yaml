@@ -9,7 +9,7 @@ meta:
 env=sadtin:
   variables:
   - BANBUN=ciidien-20190516
-  - KIONG=meulidfa
+  - NGINGIEN=MeuLid
   - VUN_MIONGZII=https://github.com/i3thuan5/moe-hakkadict/archive/refs/heads/main.zip
   - SANG_MIONGZII=https://www.dropbox.com/s/gs6gk8zuehxbqti/moe-hakka-sound.tar?dl=0
   - PIN=16k
@@ -53,15 +53,15 @@ mount=camsu:
   read-only: true
 
 mount=data:
-  bind: ./3-{env.BANBUN}-{env.PIN}-{env.KIONG}-data/
+  bind: ./3-{env.BANBUN}-{env.PIN}-{env.NGINGIEN}-data/
   path: /data/
 
 # mount=outputs:
-#   bind: ./{env.BANBUN}-{env.KIONG}-model_outputs/
+#   bind: ./{env.BANBUN}-{env.NGINGIEN}-model_outputs/
 #   path: /WaveRNN/model_outputs/
 
 # mount=checkpoints:
-#   bind: ./{env.BANBUN}-{env.KIONG}-checkpoints/
+#   bind: ./{env.BANBUN}-{env.NGINGIEN}-checkpoints/
 #   path: /WaveRNN/checkpoints/
 
 image=ubuntu:
@@ -119,7 +119,7 @@ job=preprocess-tacotron-job:
   use: hiunlien-kuangin
   env:
   - BANBUN={env.BANBUN}
-  - KIONG={env.KIONG}
+  - NGINGIEN={env.NGINGIEN}
   - PIN={env.PIN}
   command: |
     bash -eux -c '
@@ -135,7 +135,7 @@ job=preprocess-tacotron-job:
 #   use: hiunlien-kuangin
 #   env:
 #   - BANBUN={env.BANBUN}
-#   - KIONG={env.KIONG}
+#   - NGINGIEN={env.NGINGIEN}
 #   - CUDA_VISIBLE_DEVICES=0
 #   command: |
 #     bash -eux -c '
@@ -150,7 +150,7 @@ job=preprocess-tacotron-job:
 #   use: hiunlien-kuangin
 #   env:
 #   - BANBUN={env.BANBUN}
-#   - KIONG={env.KIONG}
+#   - NGINGIEN={env.NGINGIEN}
 #   - CUDA_VISIBLE_DEVICES=0
 #   command: |
 #     bash -eux -c '
@@ -165,7 +165,7 @@ job=preprocess-tacotron-job:
 #   use: hiunlien-kuangin
 #   env:
 #   - BANBUN={env.BANBUN}
-#   - KIONG={env.KIONG}
+#   - NGINGIEN={env.NGINGIEN}
 #   command: |
 #     bash -eux -c '
 #       cp /camsu/hparams.py .
@@ -178,7 +178,7 @@ job=preprocess-tacotron-job:
 #   use: hiunlien-kuangin
 #   env:
 #   - BANBUN={env.BANBUN}
-#   - KIONG={env.KIONG}
+#   - NGINGIEN={env.NGINGIEN}
 #   - CUDA_VISIBLE_DEVICES=0
 #   command: |
 #     bash -eux -c '
@@ -195,7 +195,7 @@ job=preprocess-tacotron-job:
 #   env:
 #   - KU={env.KU:Kiung ha loiˇ liau dong senˊ qi}
 #   - BANBUN={env.BANBUN}
-#   - KIONG={env.KIONG}
+#   - NGINGIEN={env.NGINGIEN}
 #   - CUDA_VISIBLE_DEVICES=1
 #   command: |
 #     bash -eux -c '

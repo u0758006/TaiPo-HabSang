@@ -61,7 +61,7 @@ def ciidien(path: Union[str, Path], wav_files):
 
 
 def qim_ciidien(path: Union[str, Path], wav_files):
-    csv_files = get_files(path / '調型資料', extension='.csv')
+    csv_files = get_files(os.path.join(path, '調型資料'), extension='.csv')
 
     iu_imdong = set()
     for wav_sootsai in wav_files:
@@ -77,14 +77,14 @@ def qim_ciidien(path: Union[str, Path], wav_files):
         'Lun': ('詔安腔音讀', 's_sound5'),
         'LiugDui': ('南四縣腔音讀', 's_sound6'),
     }
-    ngingian = os.environ['NGINGIAN']
+    ngingian = os.environ['NGINGIEN']
     vun, im = CIIDIEN[ngingian]
 
     if len(csv_files) != 1:
         raise RuntimeError('文字語料尋無！')
     with open(csv_files[0], encoding='utf-8') as f:
         for su, hang in enumerate(DictReader(f)):
-            miang = Path('corpus') / im / '{:05}.mp3'.format(su)
+            miang = os.path.join('corpus', im, '{:05}.mp3'.format(su))
             if mia in iu_imdong:
                 honsii = hang['詞目']
                 lomasii = hang[vun]
