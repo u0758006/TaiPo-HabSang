@@ -129,7 +129,7 @@ job=preprocess-tacotron-job:
       cp /camsu/symbols.py utils/text/symbols.py
       python preprocess-tacotron.py --path /giliau/
     '
-  mounts: [zon-ngiliau, camsu, data, ]
+  mounts: [zon_ngiliau, camsu, data, ]
 
 # job=tacotron-job:
 #   use: hiunlien-kuangin
