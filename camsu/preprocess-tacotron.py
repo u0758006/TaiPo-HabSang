@@ -52,38 +52,43 @@ extension = args.extension
 path = args.path
 
 
-def khehue(path: Union[str, Path], wav_files):
+def ciidien(path: Union[str, Path], wav_files):
     text_dict = {}
-    for hj, lmj, mia in tshue_khehue(path, wav_files):
-        if (
-            '（' not in hj and '(' not in hj and '【' not in hj
-            and '（' not in lmj and '(' not in lmj
-            and '【' not in lmj and '/' not in lmj
-        ):
-            text_dict[mia] = lmj.replace('\xa0', '')
+    for _honsii, lomasii, imdongmiang in qim_ciidien(path, wav_files):
+            text_dict[imdongmiang] = lomasii
 
     return text_dict
 
 
-def tshue_khehue(path: Union[str, Path], wav_files):
-    csv_files = get_files(path, extension='.csv')
+def qim_ciidien(path: Union[str, Path], wav_files):
+    csv_files = get_files(path / '調型資料', extension='.csv')
 
-    u_tihleh = set()
+    iu_imdong = set()
     for wav_sootsai in wav_files:
         mia = basename(wav_sootsai)
         if mia.endswith('.wav'):
-            u_tihleh.add(mia[:-4])
+            iu_imdong.add(mia[:-4])
 
-    gigian = os.environ['GIGIAN']
-    for csv_file in sorted(csv_files):
-        if gigian in csv_file.name:
-            with open(csv_file, encoding='utf-8') as f:
-                for tsua in DictReader(f):
-                    mia = basename(tsua['客語音檔'])
-                    if mia in u_tihleh:
-                        hj = tsua['客家語']
-                        lmj = tsua['客語標音']
-                        yield hj, lmj, mia
+    CIIDIEN = {
+        'MeuLid': ('四縣腔音讀', 's_sound'),
+        'SinZhug': ('海陸腔音讀', 's_sound2'),
+        'DungShe': ('大埔腔音讀', 's_sound3'),
+        'SinZhu': ('饒平腔音讀', 's_sound4'),
+        'Lun': ('詔安腔音讀', 's_sound5'),
+        'LiugDui': ('南四縣腔音讀', 's_sound6'),
+    }
+    ngingian = os.environ['NGINGIAN']
+    vun, im = CIIDIEN[ngingian]
+
+    if len(csv_files) != 1:
+        raise RuntimeError('文字語料尋無！')
+    with open(csv_files[0], encoding='utf-8') as f:
+        for su, hang in enumerate(DictReader(f)):
+            miang = Path('corpus') / im / '{:05}.mp3'.format(su)
+            if mia in iu_imdong:
+                honsii = hang['詞目']
+                lomasii = hang[vun]
+                yield honsii, lomasii, miang
 
 
 def convert_file(path: Path):
@@ -123,7 +128,7 @@ else:
 
     if not hp.ignore_tts:
 
-        text_dict = khehue(path, wav_files)
+        text_dict = ciidien(path, wav_files)
 
         with open(paths.data / 'text_dict.pkl', 'wb') as f:
             pickle.dump(text_dict, f)
