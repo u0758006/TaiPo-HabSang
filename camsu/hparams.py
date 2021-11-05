@@ -95,3 +95,12 @@ tts_checkpoint_every = 2_000        # checkpoints the model every X steps
 
 
 # ------------------------------------------------------------------------------------------------------------------#
+
+CIIDIEN = {
+    'MeuLid': ('四縣腔音讀', 's_sound'),
+    'SinZhug': ('海陸腔音讀', 's_sound2'),
+    'DungShe': ('大埔腔音讀', 's_sound3'),
+    'SinZhu': ('饒平腔音讀', 's_sound4'),
+    'Lun': ('詔安腔音讀', 's_sound5'),
+    'LiugDui': ('南四縣腔音讀', 's_sound6'),
+}

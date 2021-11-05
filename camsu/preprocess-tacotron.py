@@ -52,19 +52,17 @@ extension = args.extension
 path = args.path
 
 
-def ciidien(path: Union[str, Path], wav_files):
+def ciidien(path: Union[str, Path], vun, wav_files):
     text_dict = {}
-    for _honsii, lomasii, imdongmiang in qim_ciidien(path, wav_files):
+    for _honsii, lomasii, imdongmiang in qim_ciidien(path, vun, wav_files):
             text_dict[imdongmiang] = lomasii
     print('text_dict', text_dict)
     return text_dict
 
 
-def qim_ciidien(path: Union[str, Path], wav_files):
-    csv_files = get_files(
-        os.path.join(path, 'moe-hakkadict-main', '調型資料'),
-        extension='.csv'
-    )
+def qim_ciidien(path: Union[str, Path], vun, wav_files):
+    csv_files = get_files(path, extension='.csv')
+    print('path',path)
 
     iu_imdong = set()
     for wav_sootsai in wav_files:
@@ -72,22 +70,11 @@ def qim_ciidien(path: Union[str, Path], wav_files):
         if mia.endswith('.wav'):
             iu_imdong.add(mia[:-4])
 
-    CIIDIEN = {
-        'MeuLid': ('四縣腔音讀', 's_sound'),
-        'SinZhug': ('海陸腔音讀', 's_sound2'),
-        'DungShe': ('大埔腔音讀', 's_sound3'),
-        'SinZhu': ('饒平腔音讀', 's_sound4'),
-        'Lun': ('詔安腔音讀', 's_sound5'),
-        'LiugDui': ('南四縣腔音讀', 's_sound6'),
-    }
-    ngingian = os.environ['NGINGIEN']
-    vun, im = CIIDIEN[ngingian]
-
     if len(csv_files) != 1:
         raise RuntimeError('文字語料尋無！')
     with open(csv_files[0], encoding='utf-8') as f:
         for su, hang in enumerate(DictReader(f)):
-            miang = os.path.join('corpus', im, '{:05}.mp3'.format(su))
+            miang = '{:05}.mp3'.format(su)
             if mia in iu_imdong:
                 honsii = hang['詞目']
                 lomasii = hang[vun]
@@ -117,7 +104,9 @@ def process_wav(path: Path):
     return wav_id, m.shape[-1]
 
 
-wav_files = get_files(path, extension)
+ngingian = os.environ['NGINGIEN']
+vun, im = hp.CIIDIEN[ngingian]
+wav_files = get_files(os.path.join(path, 'corpus', im), extension)
 paths = Paths(hp.data_path, hp.voc_model_id, hp.tts_model_id)
 
 print(f'\n{len(wav_files)} {extension[1:]} files found in "{path}"\n')
@@ -131,7 +120,11 @@ else:
 
     if not hp.ignore_tts:
 
-        text_dict = ciidien(path, wav_files)
+        text_dict = ciidien(
+            os.path.join(path, 'moe-hakkadict-main', '調型資料'),
+            vun,
+            wav_files
+        )
 
         with open(paths.data / 'text_dict.pkl', 'wb') as f:
             pickle.dump(text_dict, f)
