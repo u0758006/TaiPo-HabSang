@@ -45,7 +45,7 @@ mount=pun_ngiliau:
 
 mount=zon_ngiliau:
   bind: ./2-{env.BANBUN}-{env.PIN}/
-  path: /zon_giliau/
+  path: /zon_ngiliau/
 
 mount=camsu:
   bind: ./camsu/
@@ -99,8 +99,9 @@ job=zon-bienma-job:
       apt-get update
       apt-get install -y ffmpeg sox
       cp -r moe-hakkadict-main /zon_ngiliau/
-      mkdir -p /zon_ngiliau/corpus /qiamsii/corpus
+      mkdir -p /qiamsii/corpus /zon_ngiliau/corpus
       find . -type d -exec mkdir -p /qiamsii/{} \;
+      find . -type d -exec mkdir -p /zon_ngiliau/{} \;
       find . -name "*.mp3" -print0 | \
         xargs -0 -L 1 -P $THREAD -I{} ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar $PIN /qiamsii/{}.wav
       find /qiamsii/ -type f -empty -delete
@@ -127,7 +128,7 @@ job=preprocess-tacotron-job:
       cp /camsu/preprocess-tacotron.py .
       cp /camsu/text_init.py utils/text/__init__.py
       cp /camsu/symbols.py utils/text/symbols.py
-      python preprocess-tacotron.py --path /giliau/
+      python preprocess-tacotron.py --path /zon_ngiliau/
     '
   mounts: [zon_ngiliau, camsu, data, ]
 
