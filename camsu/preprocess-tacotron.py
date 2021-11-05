@@ -71,7 +71,7 @@ def qim_ciidien(path: Union[str, Path], vun, wav_files):
         raise RuntimeError('文字語料尋無！')
 
     with open(csv_files[0], encoding='utf-8') as f:
-        for su, hang in enumerate(DictReader(f), start=1):
+        for hang in DictReader(f):
             miang = '{}.mp3'.format(hang['系統編號'][-5:])
             if miang in iu_imdong:
                 honsii = hang['詞目']
