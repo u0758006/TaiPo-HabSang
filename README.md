@@ -70,7 +70,7 @@
     │   └── 《臺灣客家語常用詞辭典》內容資料(1100430).csv
     └── 轉做調型資料.py
 ```
-3. `time dobi preprocess-tacotron`，準備tactorn格式，產生音檔長短`dataset.pkl`，音檔羅馬字對應`text_dict.pkl`、頻譜`mel/`、`quant/`。
+3. `time dobi preprocess-tacotron`，準備tactorn格式，產生音檔長短`dataset.pkl`，音檔羅馬字對應`text_dict.pkl`、音檔頻譜`mel/`、音檔波形sample`quant/`。
 ```
 3-ciidien-20190516-16k-MeuLid-data/
 ├── dataset.pkl
