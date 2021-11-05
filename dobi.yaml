@@ -13,6 +13,7 @@ env=sadtin:
   - VUN_MIONGZII=https://github.com/i3thuan5/moe-hakkadict/archive/refs/heads/main.zip
   - SANG_MIONGZII=https://www.dropbox.com/s/gs6gk8zuehxbqti/moe-hakka-sound.tar?dl=0
   - PIN=16k
+  - THREAD=4
 
 alias=hazoi-ngiliau:
   tasks: [sadtin, hazoi-ngiliau-job]
@@ -92,6 +93,7 @@ job=zon-bienma-job:
   env:
   - BANBUN={env.BANBUN}
   - PIN={env.PIN}
+  - THREAD={env.THREAD}
   command: |
     bash -eux -c '
       apt-get update
@@ -100,10 +102,10 @@ job=zon-bienma-job:
       mkdir -p /zon_ngiliau/corpus /qiamsii/corpus
       find . -type d -exec mkdir -p /qiamsii/{} \;
       find . -name "*.mp3" -print0 | \
-        xargs -0 -L 1 -P 4 -I{} ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar $PIN /qiamsii/{}.wav
+        xargs -0 -L 1 -P $THREAD -I{} ffmpeg -i {} -c:a pcm_s16le -ac 1 -ar $PIN /qiamsii/{}.wav
       find /qiamsii/ -type f -empty -delete
       find . -name "*.mp3" -print0 | \
-        xargs -0 -L 1 -P 4 -I{} sox /qiamsii/{}.wav /zon_ngiliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse
+        xargs -0 -L 1 -P $THREAD -I{} sox /qiamsii/{}.wav /zon_ngiliau/{}.wav silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse
       find /zon_ngiliau/corpus/ -size -1000c -delete
     '
   mounts: [pun_ngiliau, zon_ngiliau, ]
