@@ -87,10 +87,10 @@
 │   └── 15450.mp3.npy
 └── text_dict.pkl
 ```
-4. `time dobi tacotron`，訓練Tacotron模型。假使在tactorn訓練時節，愛產生`gta/`檔案，走`dobi tacotron-gta`。`gta/`係[Ground Truth Aligned synthesis](https://github.com/Rayhane-mamah/Tacotron-2#synthesis)用个，[Ground Truth相關資料](https://www.aptiv.com/en/insights/article/what-is-ground-truth)。
+4. `time dobi tacotron`，訓練Tacotron模型。假使在tactorn訓練時節，愛產生`gta/`檔案，走`time dobi tacotron-gta`。`gta/`係[Ground Truth Aligned synthesis](https://github.com/Rayhane-mamah/Tacotron-2#synthesis)用个，[Ground Truth相關資料](https://www.aptiv.com/en/insights/article/what-is-ground-truth)。
 5. `time dobi preprocess-wavernn`，因為太長个音檔無法度用訓練tacotron，會無法度coverage。`hparams.py`有設定`tts_max_mel_len`，故所`gta/`無全部音檔有。這指令照`gta/`檔案，產生wavernn愛个`dataset_wavernn.pkl`。
 6. `time dobi wavernn`，訓練WaveRNN模型。
-7. `time dobi huatsiann`，合成語句。
+7. `time dobi habsang`，合成語句。
 
 #### Pau--khi-lai
 ```

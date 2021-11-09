@@ -36,8 +36,8 @@ alias=preprocess-wavernn:
 alias=wavernn:
   tasks: [sadtin, wavernn-job, ]
 
-# alias=huatsiann:
-#   tasks: [sadtin, huatsiann-job, ]
+alias=habsang:
+  tasks: [sadtin, habsang-job, ]
 
 mount=pun_ngiliau:
   bind: ./1-{env.BANBUN}/
@@ -192,24 +192,24 @@ job=wavernn-job:
     '
   mounts: [camsu, data, checkpoints, outputs, ]
 
-# job=huatsiann-job:
-#   use: hiunlien-kuangin
-#   env:
-#   - KU={env.KU:Kiung ha loiˇ liau dong senˊ qi}
-#   - BANBUN={env.BANBUN}
-#   - NGINGIEN={env.NGINGIEN}
-#   - CUDA_VISIBLE_DEVICES=1
-#   command: |
-#     bash -eux -c '
-#       cp /camsu/hparams.py .
-#       cp /camsu/text_init.py utils/text/__init__.py
-#       cp /camsu/text_symbols.py utils/text/text_symbols.py
-#       sed -i "s/required=True, //g" gen_tacotron.py
-#       time python gen_tacotron.py --input_text "$KU" griffinlim
-#       time python gen_tacotron.py --input_text "$KU" wavernn
-#       time python gen_tacotron.py --input_text "$KU" wavernn --unbatched
-#     '
-#   mounts: [camsu, checkpoints, outputs, ]
+job=habsang-job:
+  use: hiunlien-kuangin
+  env:
+  - KU={env.KU:Kiung ha loiˇ liau dong senˊ qi}
+  - BANBUN={env.BANBUN}
+  - NGINGIEN={env.NGINGIEN}
+  - CUDA_VISIBLE_DEVICES=1
+  command: |
+    bash -eux -c '
+      cp /camsu/hparams.py .
+      cp /camsu/text_init.py utils/text/__init__.py
+      cp /camsu/text_symbols.py utils/text/text_symbols.py
+      sed -i "s/required=True, //g" gen_tacotron.py
+      time python gen_tacotron.py --input_text "$KU" griffinlim
+      time python gen_tacotron.py --input_text "$KU" wavernn
+      time python gen_tacotron.py --input_text "$KU" wavernn --unbatched
+    '
+  mounts: [camsu, checkpoints, outputs, ]
 
 # image=hokbu-kuangin:
 #   image: i3thuan5/suisiann-wavernn
