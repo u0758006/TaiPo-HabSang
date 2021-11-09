@@ -27,8 +27,8 @@ alias=preprocess-tacotron:
 alias=tacotron:
   tasks: [sadtin, tacotron-job, ]
 
-# alias=tacotron-gta:
-#   tasks: [sadtin, tacotron-gta-job, ]
+alias=tacotron-gta:
+  tasks: [sadtin, tacotron-gta-job, ]
 
 alias=preprocess-wavernn:
   tasks: [sadtin, preprocess-wavernn-job, ]
@@ -147,20 +147,20 @@ job=tacotron-job:
     '
   mounts: [camsu, data, checkpoints, ]
 
-# job=tacotron-gta-job:
-#   use: hiunlien-kuangin
-#   env:
-#   - BANBUN={env.BANBUN}
-#   - NGINGIEN={env.NGINGIEN}
-#   - CUDA_VISIBLE_DEVICES=0
-#   command: |
-#     bash -eux -c '
-#       cp /camsu/hparams.py .
-#       cp /camsu/text_init.py utils/text/__init__.py
-#       cp /camsu/text_symbols.py utils/text/text_symbols.py
-#       python train_tacotron.py --force_gta
-#     '
-#   mounts: [camsu, data, checkpoints, ]
+job=tacotron-gta-job:
+  use: hiunlien-kuangin
+  env:
+  - BANBUN={env.BANBUN}
+  - NGINGIEN={env.NGINGIEN}
+  - CUDA_VISIBLE_DEVICES=0
+  command: |
+    bash -eux -c '
+      cp /camsu/hparams.py .
+      cp /camsu/text_init.py utils/text/__init__.py
+      cp /camsu/text_symbols.py utils/text/text_symbols.py
+      python train_tacotron.py --force_gta
+    '
+  mounts: [camsu, data, checkpoints, ]
 
 job=preprocess-wavernn-job:
   use: hiunlien-kuangin
