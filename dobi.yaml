@@ -30,11 +30,11 @@ alias=tacotron:
 # alias=tacotron-gta:
 #   tasks: [sadtin, tacotron-gta-job, ]
 
-# alias=preprocess-wavernn:
-#   tasks: [sadtin, preprocess-wavernn-job, ]
+alias=preprocess-wavernn:
+  tasks: [sadtin, preprocess-wavernn-job, ]
 
-# alias=wavernn:
-#   tasks: [sadtin, wavernn-job, ]
+alias=wavernn:
+  tasks: [sadtin, wavernn-job, ]
 
 # alias=huatsiann:
 #   tasks: [sadtin, huatsiann-job, ]
@@ -60,9 +60,9 @@ mount=checkpoints:
   bind: ./4-{env.BANBUN}-{env.PIN}-{env.NGINGIEN}-checkpoints/
   path: /WaveRNN/checkpoints/
 
-# mount=outputs:
-#   bind: ./{env.BANBUN}-{env.NGINGIEN}-model_outputs/
-#   path: /WaveRNN/model_outputs/
+mount=outputs:
+  bind: ./5-{env.BANBUN}-{env.PIN}-{env.NGINGIEN}-model_outputs/
+  path: /WaveRNN/model_outputs/
 
 image=ubuntu:
   image: ubuntu
@@ -162,34 +162,34 @@ job=tacotron-job:
 #     '
 #   mounts: [camsu, data, checkpoints, ]
 
-# job=preprocess-wavernn-job:
-#   use: hiunlien-kuangin
-#   env:
-#   - BANBUN={env.BANBUN}
-#   - NGINGIEN={env.NGINGIEN}
-#   command: |
-#     bash -eux -c '
-#       cp /camsu/hparams.py .
-#       cp /camsu/preprocess-wavernn.py .
-#       python preprocess-wavernn.py --path /data/gta/
-#     '
-#   mounts: [camsu, data, ]
+job=preprocess-wavernn-job:
+  use: hiunlien-kuangin
+  env:
+  - BANBUN={env.BANBUN}
+  - NGINGIEN={env.NGINGIEN}
+  command: |
+    bash -eux -c '
+      cp /camsu/hparams.py .
+      cp /camsu/preprocess-wavernn.py .
+      python preprocess-wavernn.py --path /data/gta/
+    '
+  mounts: [camsu, data, ]
 
-# job=wavernn-job:
-#   use: hiunlien-kuangin
-#   env:
-#   - BANBUN={env.BANBUN}
-#   - NGINGIEN={env.NGINGIEN}
-#   - CUDA_VISIBLE_DEVICES=0
-#   command: |
-#     bash -eux -c '
-#       cp /camsu/hparams.py .
-#       cp /camsu/text_init.py utils/text/__init__.py
-#       cp /camsu/text_symbols.py utils/text/text_symbols.py
-#       sed -i "s/dataset.pkl/dataset_wavernn.pkl/g" utils/dataset.py
-#       python train_wavernn.py --gta
-#     '
-#   mounts: [camsu, data, checkpoints, outputs, ]
+job=wavernn-job:
+  use: hiunlien-kuangin
+  env:
+  - BANBUN={env.BANBUN}
+  - NGINGIEN={env.NGINGIEN}
+  - CUDA_VISIBLE_DEVICES=0
+  command: |
+    bash -eux -c '
+      cp /camsu/hparams.py .
+      cp /camsu/text_init.py utils/text/__init__.py
+      cp /camsu/text_symbols.py utils/text/text_symbols.py
+      sed -i "s/dataset.pkl/dataset_wavernn.pkl/g" utils/dataset.py
+      python train_wavernn.py --gta
+    '
+  mounts: [camsu, data, checkpoints, outputs, ]
 
 # job=huatsiann-job:
 #   use: hiunlien-kuangin
