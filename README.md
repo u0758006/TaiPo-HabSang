@@ -88,9 +88,68 @@
 └── text_dict.pkl
 ```
 4. `time dobi tacotron`，訓練Tacotron模型。假使在tactorn訓練時節，愛產生`gta/`檔案，走`time dobi tacotron-gta`。`gta/`係[Ground Truth Aligned synthesis](https://github.com/Rayhane-mamah/Tacotron-2#synthesis)用个，[Ground Truth相關資料](https://www.aptiv.com/en/insights/article/what-is-ground-truth)。
+```
+4-ciidien-20190516-16k-MeuLid-checkpoints/
+├── khehue_lsa_smooth_attention.tacotron
+│   ├── attention
+│   │   ├── 100463.png
+│   │   ├── 101429.png
+│   │   └── ...
+│   ├── latest_optim.pyt
+│   ├── latest_weights.pyt
+│   ├── log.txt
+│   ├── mel_plots
+│   │   ├── 100463.png
+│   │   ├── 101429.png
+│   │   └── ...
+│   ├── taco_step100K_optim.pyt
+│   ├── taco_step100K_weights.pyt
+│   ├── ...
+│   ├── taco_step98K_optim.pyt
+│   └── taco_step98K_weights.pyt
+└── khehue_raw.wavernn
+```
 5. `time dobi preprocess-wavernn`，因為太長个音檔無法度用訓練tacotron，會無法度coverage。`hparams.py`有設定`tts_max_mel_len`，故所`gta/`無全部音檔有。這指令照`gta/`檔案，產生wavernn愛个`dataset_wavernn.pkl`。
-6. `time dobi wavernn`，訓練WaveRNN模型。
+```
+3-ciidien-20190516-16k-MeuLid-data/
+├── dataset.pkl
+├── dataset_wavernn.pkl
+└── ...
+
+```
+6. `time dobi wavernn`，訓練WaveRNN模型。`4-ciidien-20190516-16k-MeuLid-checkpoints/khehue_raw.wavernn`係模型，`5-ciidien-20190516-16k-MeuLid-model_outputs/khehue_raw.wavernn`做得聽結果。
+```
+4-ciidien-20190516-16k-MeuLid-checkpoints/
+├── khehue_lsa_smooth_attention.tacotron
+│   └── ...
+└── khehue_raw.wavernn
+    ├── latest_optim.pyt
+    ├── latest_weights.pyt
+    ├── log.txt
+    ├── wave_step100K_optim.pyt
+    ├── wave_step100K_weights.pyt
+    └── ...
+
+5-ciidien-20190516-16k-MeuLid-model_outputs/
+├── khehue_lsa_smooth_attention.tacotron
+└── khehue_raw.wavernn
+    ├── 1000k_steps_1_gen_batched_target4000_overlap400.wav
+    ├── 1000k_steps_1_target.wav
+    ├── 1000k_steps_2_gen_batched_target4000_overlap400.wav
+    ├── 1000k_steps_2_target.wav
+    └── ...
+```
 7. `time dobi habsang`，合成語句。
+```
+5-ciidien-20190516-16k-MeuLid-model_outputs/
+├── khehue_lsa_smooth_attention.tacotron
+│   ├── __input_Kiung ha l_griffinlim_350k.wav
+│   ├── __input_Kiung ha l_wavernn_batched_350k.wav
+│   └── __input_Kiung ha l_wavernn_unbatched_350k.wav
+└── khehue_raw.wavernn
+    └── ...
+
+```
 
 #### Pau--khi-lai
 ```
