@@ -11,6 +11,7 @@ from utils.dsp import reconstruct_waveform, save_wav
 import numpy as np
 import os
 
+
 def thak():
     class Tshamsoo():
         force_cpu = os.getenv('FORCE_CPU', False)
@@ -22,7 +23,6 @@ def thak():
         tts_weights = None
         save_attn = os.getenv('SAVE_ATTN', False)
         voc_weights = None
-
 
     args = Tshamsoo()
     if args.vocoder in ['griffinlim', 'gl']:
