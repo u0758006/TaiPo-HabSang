@@ -127,7 +127,7 @@ job=preprocess-tacotron-job:
       cp /camsu/hparams.py .
       cp /camsu/preprocess-tacotron.py .
       cp /camsu/text_init.py utils/text/__init__.py
-      cp /camsu/text_symbols.py utils/text/text_symbols.py
+      cp /camsu/text_symbols.py utils/text/symbols.py
       python preprocess-tacotron.py --path /zon_ngiliau/
     '
   mounts: [zon_ngiliau, camsu, data, ]
@@ -142,7 +142,7 @@ job=tacotron-job:
     bash -eux -c '
       cp /camsu/hparams.py .
       cp /camsu/text_init.py utils/text/__init__.py
-      cp /camsu/text_symbols.py utils/text/text_symbols.py
+      cp /camsu/text_symbols.py utils/text/symbols.py
       python train_tacotron.py
     '
   mounts: [camsu, data, checkpoints, ]
@@ -157,7 +157,7 @@ job=tacotron-gta-job:
     bash -eux -c '
       cp /camsu/hparams.py .
       cp /camsu/text_init.py utils/text/__init__.py
-      cp /camsu/text_symbols.py utils/text/text_symbols.py
+      cp /camsu/text_symbols.py utils/text/symbols.py
       python train_tacotron.py --force_gta
     '
   mounts: [camsu, data, checkpoints, ]
@@ -186,7 +186,7 @@ job=wavernn-job:
     bash -eux -c '
       cp /camsu/hparams.py .
       cp /camsu/text_init.py utils/text/__init__.py
-      cp /camsu/text_symbols.py utils/text/text_symbols.py
+      cp /camsu/text_symbols.py utils/text/symbols.py
       sed -i "s/dataset.pkl/dataset_wavernn.pkl/g" utils/dataset.py
       python train_wavernn.py --gta
     '
@@ -203,7 +203,7 @@ job=habsang-job:
     bash -eux -c '
       cp /camsu/hparams.py .
       cp /camsu/text_init.py utils/text/__init__.py
-      cp /camsu/text_symbols.py utils/text/text_symbols.py
+      cp /camsu/text_symbols.py utils/text/symbols.py
       sed -i "s/required=True, //g" gen_tacotron.py
       time python gen_tacotron.py --input_text "$KU" griffinlim
       time python gen_tacotron.py --input_text "$KU" wavernn
