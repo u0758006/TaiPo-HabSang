@@ -87,7 +87,7 @@
 │   └── 15450.mp3.npy
 └── text_dict.pkl
 ```
-4. `time dobi tacotron`，訓練Tacotron模型。假使在tactorn訓練時節，愛產生`gta/`檔案，走`time dobi tacotron-gta`。`gta/`係[Ground Truth Aligned synthesis](https://github.com/Rayhane-mamah/Tacotron-2#synthesis)用个，[Ground Truth相關資料](https://www.aptiv.com/en/insights/article/what-is-ground-truth)。
+4. `time dobi tacotron`，訓練Tacotron模型。盡尾會產生`gta/`檔案。`gta/`係[Ground Truth Aligned synthesis](https://github.com/Rayhane-mamah/Tacotron-2#synthesis)用个，[Ground Truth相關資料](https://www.aptiv.com/en/insights/article/what-is-ground-truth)。
 ```
 4-ciidien-20190516-16k-MeuLid-checkpoints/
 ├── khehue_lsa_smooth_attention.tacotron
@@ -110,12 +110,21 @@
 └── khehue_raw.wavernn
 ```
 
-- 10000愛有線
-  - 成功个
+- 10000steps个時節愛有線，代表tacotron學着對應`羅馬字`摎`mel/`。假使無，請檢查`text_dict.pkl`對應有著無。
+  - 成功个（`4-ciidien-20190516-16k-MeuLid-checkpoints/khehue_lsa_smooth_attention.tacotron/attention/9659.png`）
   ![成功个attention](tu/siingung-9659.png)
-  - 失敗个
+  - 失敗个（`4-ciidien-20190516-16k-MeuLid-checkpoints/khehue_lsa_smooth_attention.tacotron/attention/9658.png`）
   ![失敗个attention](tu/siidpai-9658.png)
 
+4-1. 假使在tactorn訓練時節，愛產生`gta/`檔案，走`time dobi tacotron-gta`
+
+4-2. `time dobi habsang`，試合成語句。因為wavernn吂做，故所有程式毋著係著个。會產生`Tacotron`摎`griffinlim`个音檔。`griffinlim`个音檔有電子聲，故所愛訓練`WaveRNN`分聲像人講話。
+```
+5-ciidien-20190516-16k-MeuLid-model_outputs/
+├── khehue_lsa_smooth_attention.tacotron
+│   └── __input_Kiung ha l_griffinlim_350k.wav
+└ ...
+```
 5. `time dobi preprocess-wavernn`，因為太長个音檔無法度用訓練tacotron，會無法度coverage。`hparams.py`有設定`tts_max_mel_len`，故所`gta/`無全部音檔有。這指令照`gta/`檔案，產生wavernn愛个`dataset_wavernn.pkl`。
 ```
 3-ciidien-20190516-16k-MeuLid-data/
