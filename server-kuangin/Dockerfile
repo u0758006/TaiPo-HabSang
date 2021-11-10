@@ -20,9 +20,6 @@ RUN pip install flask gunicorn
 
 COPY ./gen_tacotron.py zugi.py
 
-COPY tshamsoo/hparams.py .
-COPY tshamsoo/text_init.py utils/text/__init__.py
-COPY tshamsoo/symbols.py utils/text/symbols.py
 CMD gunicorn \
   -b 0.0.0.0:5000 \
   --timeout 60 \

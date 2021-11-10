@@ -181,23 +181,31 @@ docker run --rm -ti -e CUDA_VISIBLE_DEVICES=1 -v `pwd`/kiatko:/kiatko -p 5000:50
 # CPU
 docker run --rm -ti -e FORCE_CPU=True -v `pwd`/kiatko:/kiatko -p 5000:5000 i3thuan5/suisiann-wavernn:SuiSiann-WaveRNN-HokBu-fafoy
 ```
+```
 
+curl -i -X POST -H "Content-Type: application/json"  \
+    -d '[
+        {"src": "我 打 籃 球 時 手 扭 傷 ， 醫 生 說 要 打 石 膏 。 ", "id": 1},
+        {"src": "黃 槿 樹 的 葉 子 ， 一 片 差 不 多 手 掌 一 般 大 。 ", "id": 1}
+    ]' \
+    "http://localhost:5000/translate"
+
+```
 ##### Tshi(舊)
 Python
 ```python
 from http.client import HTTPConnection
 from urllib.parse import urlencode
 
-taiBun='tak10-ke7 tsə2-hue1 lai7 tsʰit8-tʰə5 !'
 參數 = urlencode({
-    'taibun': taiBun,
-    'sootsai': 'taiBun/tshi.wav',
+    'toivun': 'tak10-ke7 tsə2-hue1 lai7 tsʰit8-tʰə5 !',
+    'sootsai': 'cii.wav',
 })
 headers = {
     "Content-type": "application/x-www-form-urlencoded",
     "Accept": "text/plain"
 }
-it_conn = HTTPConnection('hapsing', port=5000)
+it_conn = HTTPConnection('localhost', port=5000)
 it_conn.request("POST", '/', 參數, headers)
 it_conn.getresponse().read()
 ```

@@ -108,11 +108,12 @@ app = Flask(__name__)
 
 @app.route("/", methods=('POST',))
 def hapsing():
-    taibun = request.form['taibun']
-    sootsai = request.form['sootsai']
-    imtong_sootsai = join('/kiatko', sootsai)
-    tsau(taibun, imtong_sootsai)
-    return sootsai
+    toivun = request.form['toivun']
+    socoi = request.form['socoi']
+    imdong = join('/giedgo', socoi)
+    tsau(toivun, imdong)
+    return socoi
+
 
 def tsau(input_text, save_path):
     if input_text:
