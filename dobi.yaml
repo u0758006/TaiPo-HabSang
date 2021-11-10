@@ -210,7 +210,3 @@ job=habsang-job:
       time python gen_tacotron.py --input_text "$KU" wavernn --unbatched
     '
   mounts: [camsu, checkpoints, outputs, ]
-
-# image=hokbu-kuangin:
-#   image: i3thuan5/suisiann-wavernn
-#   context: .

@@ -7,7 +7,7 @@
 - [docker-compose](https://docs.docker.com/compose/install/)
 - 設定docker權限`sudo usermod -aG docker $USER`
 
-## 步
+## 訓練步
 1. 先用`time dobi hazoi-ngiliau`，會下載客語教典詞音檔，下載好會恁樣：
 ```
 1-ciidien-20190516/
@@ -166,6 +166,12 @@
     └── ...
 
 ```
+
+### 定服務
+```
+docker-compose up --build
+```
+
 
 #### Pau--khi-lai
 ```
