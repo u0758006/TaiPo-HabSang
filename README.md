@@ -172,18 +172,8 @@
 docker-compose up --build
 ```
 
-
-#### Pau--khi-lai
-```
-time dobi hokbu-khuanking
-# GPU
-docker run --rm -ti -e CUDA_VISIBLE_DEVICES=1 -v `pwd`/kiatko:/kiatko -p 5000:5000 i3thuan5/suisiann-wavernn:SuiSiann-WaveRNN-HokBu-fafoy
-# CPU
-docker run --rm -ti -e FORCE_CPU=True -v `pwd`/kiatko:/kiatko -p 5000:5000 i3thuan5/suisiann-wavernn:SuiSiann-WaveRNN-HokBu-fafoy
-```
-
-##### Tshi(舊)
-Python
+### 試合聲
+Python3
 ```python3
 from http.client import HTTPConnection
 from urllib.parse import urlencode
@@ -199,4 +189,10 @@ headers = {
 it_conn = HTTPConnection('localhost', port=5000)
 it_conn.request("POST", '/', 參數, headers)
 it_conn.getresponse().read()
+```
+
+### 結果
+```
+6-giedgo/
+└── cii.wav
 ```

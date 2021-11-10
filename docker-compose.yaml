@@ -3,6 +3,9 @@ version: '3.7'
 services:
   habsang:
     build: ./server-kuangin
+    environment:
+      CUDA_VISIBLE_DEVICES: "all"
+      # FORCE_CPU: "True"
     ports:
       - "5000:5000"
     volumes:
