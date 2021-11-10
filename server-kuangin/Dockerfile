@@ -10,11 +10,6 @@ WORKDIR /WaveRNN
 ENV LANG C.UTF-8
 RUN pip install -r requirements.txt
 
-#RUN apt-get update && \
-  #apt-get install -y libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0 ffmpeg libav-tools
-
-#RUN pip install --upgrade librosa
-#RUN git pull # 20191125
 
 RUN pip install flask gunicorn
 
