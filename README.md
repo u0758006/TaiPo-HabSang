@@ -109,6 +109,13 @@
 │   └── taco_step98K_weights.pyt
 └── khehue_raw.wavernn
 ```
+
+- 10000愛有線
+  - 成功个
+  ![成功个attention](tu/siingung-9659.png)
+  - 失敗个
+  ![失敗个attention](tu/siidpai-9658.png)
+
 5. `time dobi preprocess-wavernn`，因為太長个音檔無法度用訓練tacotron，會無法度coverage。`hparams.py`有設定`tts_max_mel_len`，故所`gta/`無全部音檔有。這指令照`gta/`檔案，產生wavernn愛个`dataset_wavernn.pkl`。
 ```
 3-ciidien-20190516-16k-MeuLid-data/
