@@ -55,7 +55,7 @@
     │   └── 《臺灣客家語常用詞辭典》內容資料(1100430).csv
     └── 轉做調型資料.py
 ```
-2. `time dobi zon-bienma`，毋愛頭尾無聲个部份，tacotron較會收斂，而且wave downsample 乜降做 16bits wav，盡尾合成較遽。
+2. `time dobi zon-bienma`，毋愛頭尾無聲个部份，tacotron較會收斂，而且wave downsample 乜降做 16bits wav，盡尾合成較遽。程式愛走半點鐘。
 ```
 2-ciidien-20190516-16k/
 ├── corpus
@@ -103,7 +103,7 @@
 │   └── 15450.mp3.npy
 └── text_dict.pkl
 ```
-4. `time dobi tacotron`，訓練Tacotron模型。盡尾會產生`gta/`檔案。`gta/`係[Ground Truth Aligned synthesis](https://github.com/Rayhane-mamah/Tacotron-2#synthesis)用个，[Ground Truth相關資料](https://www.aptiv.com/en/insights/article/what-is-ground-truth)。
+4. `time dobi tacotron`，訓練Tacotron模型。盡尾會產生`gta/`檔案。`gta/`係[Ground Truth Aligned synthesis](https://github.com/Rayhane-mamah/Tacotron-2#synthesis)用个，[Ground Truth相關資料](https://www.aptiv.com/en/insights/article/what-is-ground-truth)。程式愛走12點鐘。
 ```
 4-ciidien-20190516-16k-MeuLid-checkpoints/
 ├── hagfa_lsa_smooth_attention.tacotron
@@ -162,7 +162,7 @@ Original Traceback (most recent call last):
   File "mtrand.pyx", line 992, in mtrand.RandomState.randint
 ValueError: Range cannot be empty (low >= high) unless no samples are taken
 ```
-6. `time dobi wavernn`，訓練WaveRNN模型。`4-ciidien-20190516-16k-MeuLid-checkpoints/hagfa_raw.wavernn`係模型，`5-ciidien-20190516-16k-MeuLid-model_outputs/hagfa_raw.wavernn`做得聽結果。
+6. `time dobi wavernn`，訓練WaveRNN模型。`4-ciidien-20190516-16k-MeuLid-checkpoints/hagfa_raw.wavernn`係模型，`5-ciidien-20190516-16k-MeuLid-model_outputs/hagfa_raw.wavernn`做得聽訓練時結果。程式愛走51點鐘。
 ```
 4-ciidien-20190516-16k-MeuLid-checkpoints/
 ├── hagfa_lsa_smooth_attention.tacotron
@@ -195,6 +195,9 @@ ValueError: Range cannot be empty (low >= high) unless no samples are taken
     └── ...
 
 ```
+
+步用Intel i7-7700摎Nvidia 2080TI，走10分鐘以下，毋會寫時間。
+
 
 ### 定服務
 ```
