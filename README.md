@@ -1,7 +1,23 @@
 # KhehUe-HapSing
 自 https://github.com/fatchord/WaveRNN 來訓練。
 
+## 資料
+1. 羅馬字：`Kiung ha loiˇ liau dong senˊ qi`
+2. Mel Spectrogram頻譜
+3. 音檔
+
+## 模型
+### Tacotron模型
+`1. 羅馬字`轉`2. Mel Spectrogram頻譜`
+
+### Griffinlim數學方法
+`2. Mel Spectrogram頻譜`轉`3. 音檔`。轉較遽，像電子聲。
+
+### WaveRNN模型
+`2. Mel Spectrogram頻譜`轉`3. 音檔`。愛GPU算1~3秒，像人聲。
+
 ## 安
+- [Nvidia GPU Driver](https://phoenixnap.com/kb/install-nvidia-drivers-ubuntu)
 - [dobi](https://github.com/dnephin/dobi)
 - [docker](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/)
 - [docker-compose](https://docs.docker.com/compose/install/)
