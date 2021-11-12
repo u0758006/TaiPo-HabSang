@@ -131,7 +131,20 @@
 ├── dataset.pkl
 ├── dataset_wavernn.pkl
 └── ...
-
+```
+另外有用`find -delete`㓾0.18秒以下个音檔。
+```
+Original Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/utils/data/_utils/worker.py", line 178, in _worker_loop
+    data = fetcher.fetch(index)
+  File "/opt/conda/lib/python3.6/site-packages/torch/utils/data/_utils/fetch.py", line 47, in fetch
+    return self.collate_fn(data)
+  File "/WaveRNN/utils/dataset.py", line 70, in collate_vocoder
+    mel_offsets = [np.random.randint(0, offset) for offset in max_offsets]
+  File "/WaveRNN/utils/dataset.py", line 70, in <listcomp>
+    mel_offsets = [np.random.randint(0, offset) for offset in max_offsets]
+  File "mtrand.pyx", line 992, in mtrand.RandomState.randint
+ValueError: Range cannot be empty (low >= high) unless no samples are taken
 ```
 6. `time dobi wavernn`，訓練WaveRNN模型。`4-ciidien-20190516-16k-MeuLid-checkpoints/hagfa_raw.wavernn`係模型，`5-ciidien-20190516-16k-MeuLid-model_outputs/hagfa_raw.wavernn`做得聽結果。
 ```
