@@ -90,7 +90,7 @@
 4. `time dobi tacotron`，訓練Tacotron模型。盡尾會產生`gta/`檔案。`gta/`係[Ground Truth Aligned synthesis](https://github.com/Rayhane-mamah/Tacotron-2#synthesis)用个，[Ground Truth相關資料](https://www.aptiv.com/en/insights/article/what-is-ground-truth)。
 ```
 4-ciidien-20190516-16k-MeuLid-checkpoints/
-├── khehue_lsa_smooth_attention.tacotron
+├── hagfa_lsa_smooth_attention.tacotron
 │   ├── attention
 │   │   ├── 100463.png
 │   │   ├── 101429.png
@@ -107,13 +107,13 @@
 │   ├── ...
 │   ├── taco_step98K_optim.pyt
 │   └── taco_step98K_weights.pyt
-└── khehue_raw.wavernn
+└── hagfa_raw.wavernn
 ```
 
 - 10000steps个時節愛有線，代表tacotron學着對應`羅馬字`摎`mel/`。假使無，請檢查`text_dict.pkl`對應有著無。
-  - 成功个（`4-ciidien-20190516-16k-MeuLid-checkpoints/khehue_lsa_smooth_attention.tacotron/attention/9659.png`）
+  - 成功个（`4-ciidien-20190516-16k-MeuLid-checkpoints/hagfa_lsa_smooth_attention.tacotron/attention/9659.png`）
   ![成功个attention](tu/siingung-9659.png)
-  - 失敗个（`4-ciidien-20190516-16k-MeuLid-checkpoints/khehue_lsa_smooth_attention.tacotron/attention/9658.png`）
+  - 失敗个（`4-ciidien-20190516-16k-MeuLid-checkpoints/hagfa_lsa_smooth_attention.tacotron/attention/9658.png`）
   ![失敗个attention](tu/siidpai-9658.png)
 
 4-1. 假使在tactorn訓練時節，愛產生`gta/`檔案，走`time dobi tacotron-gta`
@@ -121,7 +121,7 @@
 4-2. `time dobi habsang`，試合成語句。因為wavernn吂做，故所有程式毋著係著个。會產生`Tacotron`摎`griffinlim`个音檔。`griffinlim`个音檔有電子聲，故所愛訓練`WaveRNN`分聲像人講話。
 ```
 5-ciidien-20190516-16k-MeuLid-model_outputs/
-├── khehue_lsa_smooth_attention.tacotron
+├── hagfa_lsa_smooth_attention.tacotron
 │   └── __input_Kiung ha l_griffinlim_350k.wav
 └ ...
 ```
@@ -133,12 +133,12 @@
 └── ...
 
 ```
-6. `time dobi wavernn`，訓練WaveRNN模型。`4-ciidien-20190516-16k-MeuLid-checkpoints/khehue_raw.wavernn`係模型，`5-ciidien-20190516-16k-MeuLid-model_outputs/khehue_raw.wavernn`做得聽結果。
+6. `time dobi wavernn`，訓練WaveRNN模型。`4-ciidien-20190516-16k-MeuLid-checkpoints/hagfa_raw.wavernn`係模型，`5-ciidien-20190516-16k-MeuLid-model_outputs/hagfa_raw.wavernn`做得聽結果。
 ```
 4-ciidien-20190516-16k-MeuLid-checkpoints/
-├── khehue_lsa_smooth_attention.tacotron
+├── hagfa_lsa_smooth_attention.tacotron
 │   └── ...
-└── khehue_raw.wavernn
+└── hagfa_raw.wavernn
     ├── latest_optim.pyt
     ├── latest_weights.pyt
     ├── log.txt
@@ -147,8 +147,8 @@
     └── ...
 
 5-ciidien-20190516-16k-MeuLid-model_outputs/
-├── khehue_lsa_smooth_attention.tacotron
-└── khehue_raw.wavernn
+├── hagfa_lsa_smooth_attention.tacotron
+└── hagfa_raw.wavernn
     ├── 1000k_steps_1_gen_batched_target4000_overlap400.wav
     ├── 1000k_steps_1_target.wav
     ├── 1000k_steps_2_gen_batched_target4000_overlap400.wav
@@ -158,11 +158,11 @@
 7. `time dobi habsang`，合成語句。
 ```
 5-ciidien-20190516-16k-MeuLid-model_outputs/
-├── khehue_lsa_smooth_attention.tacotron
+├── hagfa_lsa_smooth_attention.tacotron
 │   ├── __input_Kiung ha l_griffinlim_350k.wav
 │   ├── __input_Kiung ha l_wavernn_batched_350k.wav
 │   └── __input_Kiung ha l_wavernn_unbatched_350k.wav
-└── khehue_raw.wavernn
+└── hagfa_raw.wavernn
     └── ...
 
 ```
