@@ -57,25 +57,6 @@ def thak():
         device = torch.device('cpu')
     print('Using device:', device)
 
-    if args.vocoder == 'wavernn':
-        print('\nInitialising WaveRNN Model...\n')
-        # Instantiate WaveRNN Model
-        voc_model = WaveRNN(rnn_dims=hp.voc_rnn_dims,
-                            fc_dims=hp.voc_fc_dims,
-                            bits=hp.bits,
-                            pad=hp.voc_pad,
-                            upsample_factors=hp.voc_upsample_factors,
-                            feat_dims=hp.num_mels,
-                            compute_dims=hp.voc_compute_dims,
-                            res_out_dims=hp.voc_res_out_dims,
-                            res_blocks=hp.voc_res_blocks,
-                            hop_length=hp.hop_length,
-                            sample_rate=hp.sample_rate,
-                            mode=hp.voc_mode).to(device)
-
-        voc_load_path = args.voc_weights if args.voc_weights else paths.voc_latest_weights
-        voc_model.load(voc_load_path)
-
     print('\nInitialising Tacotron Model...\n')
 
     # Instantiate Tacotron Model
@@ -95,6 +76,29 @@ def thak():
 
     tts_load_path = tts_weights if tts_weights else paths.tts_latest_weights
     tts_model.load(tts_load_path)
+    tts_model.save('/giedgo/tacotron2.pt')
+    with open( '/giedgo/tacotron3.pt','wb') as tong:
+        torch.jit.save(torch.jit.script(tts_model), tong)
+
+    if args.vocoder == 'wavernn':
+        print('\nInitialising WaveRNN Model...\n')
+        # Instantiate WaveRNN Model
+        voc_model = WaveRNN(rnn_dims=hp.voc_rnn_dims,
+                            fc_dims=hp.voc_fc_dims,
+                            bits=hp.bits,
+                            pad=hp.voc_pad,
+                            upsample_factors=hp.voc_upsample_factors,
+                            feat_dims=hp.num_mels,
+                            compute_dims=hp.voc_compute_dims,
+                            res_out_dims=hp.voc_res_out_dims,
+                            res_blocks=hp.voc_res_blocks,
+                            hop_length=hp.hop_length,
+                            sample_rate=hp.sample_rate,
+                            mode=hp.voc_mode).to(device)
+
+        voc_load_path = args.voc_weights if args.voc_weights else paths.voc_latest_weights
+        voc_model.load(voc_load_path)
+
     return args, voc_model, tts_model, batched, target, overlap, save_attn
 
 
