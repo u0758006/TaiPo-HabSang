@@ -177,7 +177,7 @@ class LSA(nn.Module):
         self.v = nn.Linear(attn_dim, 1, bias=False)
         self.cumulative = None
         self.attention = None
-        self.device = list(self.parameters())[0].device
+        self.device = torch.device('cuda')
 
     def init_attention(self, encoder_seq_proj):
         device = self.device  # use same device as parameters
@@ -221,7 +221,7 @@ class Decoder(nn.Module):
         self.res_rnn1 = nn.LSTMCell(lstm_dims, lstm_dims)
         self.res_rnn2 = nn.LSTMCell(lstm_dims, lstm_dims)
         self.mel_proj = nn.Linear(lstm_dims, n_mels * self.max_r, bias=False)
-        self.device = list(self.parameters())[0].device
+        self.device = torch.device('cuda')
 
     def zoneout(self, prev, current, p=0.1):
         device = self.device  # Use same device as parameters
@@ -300,7 +300,7 @@ class Tacotron(nn.Module):
 
         self.register_buffer('step', torch.zeros(1, dtype=torch.long))
         self.register_buffer('stop_threshold', torch.tensor(stop_threshold, dtype=torch.float32))
-        self.device = list(self.parameters())[0].device
+        self.device = torch.device('cuda')
 
     @property
     def r(self):
