@@ -17,6 +17,6 @@ COPY ./gen_tacotron.py zugi.py
 
 CMD gunicorn \
   -b 0.0.0.0:5000 \
-  --timeout 60 \
+  --max-requests 20 \
   --log-level debug \
   zugi:app
