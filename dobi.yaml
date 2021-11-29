@@ -195,7 +195,7 @@ job=wavernn-job:
 job=habsang-job:
   use: hiunlien-kuangin
   env:
-  - KU={env.KU:Kiung ha loiˇ liau dong senˊ qi}
+  - KU={env.KU:kiung ha loiˇ liau dong senˊ qi.}
   - BANBUN={env.BANBUN}
   - NGINGIEN={env.NGINGIEN}
   - CUDA_VISIBLE_DEVICES=1
