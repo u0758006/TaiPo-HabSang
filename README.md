@@ -228,3 +228,24 @@ it_conn.getresponse().read()
 6-giedgo/
 └── cii.wav
 ```
+
+## 其他語言
+### 設定
+`camsu/hparams.py`裡度有：
+```
+CIIDIEN = {
+    'MeuLid': ('四縣腔音讀', 's_sound'),
+    'SinZhug': ('海陸腔音讀', 's_sound2'),
+    'DungShe': ('大埔腔音讀', 's_sound3'),
+    'SinZhu': ('饒平腔音讀', 's_sound4'),
+    'Lun': ('詔安腔音讀', 's_sound5'),
+    'LiugDui': ('南四縣腔音讀', 's_sound6'),
+}
+```
+
+### 指令
+頭前2步毋使改，共樣个。假使愛新竹話，第3步開始加`NGINGIEN`：
+```
+NGINGIEN=SinZhug time dobi preprocess-tacotron
+NGINGIEN=SinZhug time dobi ...
+```
