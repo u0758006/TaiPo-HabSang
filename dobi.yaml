@@ -9,7 +9,7 @@ meta:
 env=sadtin:
   variables:
   - BANBUN=ciidien-20190516
-  - NGINGIEN=MeuLid
+  - NGINGIEN={env.NGINGIEN:MeuLid}
   - VUN_MIONGZII=https://github.com/i3thuan5/moe-hakkadict/archive/refs/heads/main.zip
   - SANG_MIONGZII=https://www.dropbox.com/s/gs6gk8zuehxbqti/moe-hakka-sound.tar?dl=0
   - PIN=16k
